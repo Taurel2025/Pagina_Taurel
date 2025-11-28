@@ -1,0 +1,122 @@
+.map-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%; /* Llenar todo el contenedor padre */
+}
+
+.map-component-card {
+  width: 100%;
+  height: 100%;
+  min-height: 450px; /* Altura mínima para asegurar que el mapa sea visible */
+}
+/* Hero azul superior */
+.map-component-hero {
+  background: #0e7cc9;
+  color: #eaf4fb;
+  padding: 48px 16px 32px;
+  text-align: center;
+  position: relative;
+}
+
+.map-component-hero h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+.map-component-hero .semibold {
+  font-weight: 700;
+  font-style: italic;
+}
+.map-component-hero p {
+  margin: 0 auto 18px;
+  max-width: 820px;
+  font-size: 16px;
+}
+
+/* Barra de búsqueda centrada */
+.map-component-search {
+  max-width: 820px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 6px 6px 6px 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.map-component-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  height: 44px;
+  font-size: 14px;
+  color: #334155;
+}
+.map-component-search button {
+  height: 44px;
+  width: 56px;
+  border: none;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+/* Card del mapa */
+.map-component-card .map-locations-container {
+  border-radius: 10px;
+ /*  background: #ffffff; */
+ /*  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); */
+  min-height: 480px; /* Asegurar altura mínima para el contenedor del mapa */
+}
+
+.selected-location-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  margin: 0 auto 24px;
+  max-width: 1300px;
+  width: calc(100% - 32px);
+}
+
+.selected-location-details h3 {
+  font-size: 1.5rem;
+  color: var(--primary-color, #1e3a8a);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 0.5rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.detail-icon {
+  color: var(--primary-color, #1e3a8a);
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 768px) {
+  .map-component-hero {
+    padding: 36px 12px 24px;
+  }
+  .map-component-hero h2 {
+    font-size: 22px;
+  }
+  .map-component-search {
+    margin: 0 12px;
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

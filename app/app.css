@@ -1,0 +1,26 @@
+/* Importar todos los estilos */
+@import "./styles/global.css";
+@import "./styles/navigation.css";
+@import "./styles/footer.css";
+@import "./styles/home.css";
+@import "./styles/servicios.css";
+@import "./styles/sobre-nosotros.css";
+@import "./styles/contactanos.css";
+
+/* Importar estilos de Swiper */
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+@import "swiper/css/effect-fade";
+
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  background-color: white;
+  font-family: var(--font-sans);
+}
