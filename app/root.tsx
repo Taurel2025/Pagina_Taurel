@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", type: "image/jpeg", href: "https://pbs.twimg.com/profile_images/3392292237/0749cb6e714c1caaf78ca914d0b53ae7_400x400.jpeg" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
