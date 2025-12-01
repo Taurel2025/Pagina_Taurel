@@ -60,6 +60,7 @@ const translations = {
       aboutUs: 'Sobre Nosotros',
       contact: 'Contáctanos',
       trackShipment: 'Rastrea tu embarque',
+      logisticsPortal: 'Taurel Logistics',
       jobs: 'Empleo'
     },
     footer: {
@@ -297,6 +298,7 @@ const translations = {
       aboutUs: 'About Us',
       contact: 'Contact Us',
       trackShipment: 'Track your shipment',
+      logisticsPortal: 'Taurel Logistics',
       jobs: 'Jobs'
     },
     footer: {

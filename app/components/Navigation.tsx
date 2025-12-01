@@ -269,7 +269,7 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
-              <li><a href="#" className="empleate-button">Empléate</a></li>
+             {/* <li><a href="#" className="empleate-button">Empléate</a></li> ----BOTON EMPLEATE */}
             </ul>
           </div>
 
@@ -277,7 +277,7 @@ const Navigation: React.FC = () => {
             {/* Grupo de botones con divisor */}
             <div className="button-group">
               <button onClick={openTrackingModal} className="tracking-button">
-                📍 Rastrea tu Embarque
+                📍 {t('nav.trackShipment')}
               </button>
               <div className="button-divider"></div>
               <a 
@@ -286,7 +286,7 @@ const Navigation: React.FC = () => {
                 rel="noopener noreferrer"
                 className="tracking-button logistics-button"
               >
-                🚢 Taurel Logistics
+               🚢 {t('nav.logisticsPortal')}
               </a>
             </div>
             
