@@ -106,7 +106,7 @@ const Navigation: React.FC = () => {
 
     setTrackingResult({ data: found });
     
-    // Importante: Esperar a que el DOM se actualice antes de dibujar el mapa
+    // Esperar a que el DOM se actualice antes de dibujar el mapa
     setTimeout(() => {
       drawMap(found);
     }, 100);
@@ -259,7 +259,7 @@ const Navigation: React.FC = () => {
         <div className="nav-container">
           <div className="logo-container">
             <a href="/">
-              <img src="/app/assets/logo.png" alt="Taurel" className="logo" />
+              <img src="/assets/logo.png" alt="Taurel" className="logo" />
             </a>
           </div>
 
@@ -269,29 +269,15 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
-             {/* <li><a href="#" className="empleate-button">Empléate</a></li> ----BOTON EMPLEATE */}
+              {/* Nuevos enlaces normales */}
+              <li><a href="#" onClick={openTrackingModal}>{t('nav.trackShipment')}</a></li>
+              <li><a href="https://logistics.taurel.com/#/login" target="_blank" rel="noopener noreferrer">{t('nav.logisticsPortal')}</a></li>
             </ul>
           </div>
 
           <div className="special-links">
-            {/* Grupo de botones con divisor */}
-            <div className="button-group">
-              <button onClick={openTrackingModal} className="tracking-button">
-                📍 {t('nav.trackShipment')}
-              </button>
-              <div className="button-divider"></div>
-              <a 
-                href="https://logistics.taurel.com/#/login" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="tracking-button logistics-button"
-              >
-               🚢 {t('nav.logisticsPortal')}
-              </a>
-            </div>
-            
             <div className="header-lang-compact">
-              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven-small" />
+              <img src="/assets/bandera.png" alt="Venezuela" className="flag-ven-small" />
               <a 
                 href="#" 
                 onClick={(e) => {e.preventDefault(); setLanguage('es');}}
@@ -322,28 +308,14 @@ const Navigation: React.FC = () => {
             <li><a href="/servicios">{t('nav.services')}</a></li>
             <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
             <li><a href="/contactanos">{t('nav.contact')}</a></li>
-            <li>
-              <div className="button-group mobile-button-group">
-                <button onClick={openTrackingModal} className="tracking-button">
-                  📍 Rastrea tu Embarque
-                </button>
-                <div className="button-divider mobile-divider"></div>
-                <a 
-                  href="https://logistics.taurel.com/#/login" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="tracking-button logistics-button"
-                >
-                  🚢 Taurel Logistics
-                </a>
-              </div>
-            </li>
-            <li><a href="#">{t('nav.jobs')}</a></li>
+            {/* Nuevos enlaces normales (sin "Empleo") */}
+            <li><a href="#" onClick={openTrackingModal}>{t('nav.trackShipment')}</a></li>
+            <li><a href="https://logistics.taurel.com/#/login" target="_blank" rel="noopener noreferrer">{t('nav.logisticsPortal')}</a></li>
           </ul>
           
           <div className="mobile-lang">
             <div className="mobile-lang-content">
-              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven" />
+              <img src="/assets/bandera.png" alt="Venezuela" className="flag-ven" />
               <a 
                 href="#" 
                 onClick={(e) => {e.preventDefault(); setLanguage('es');}}

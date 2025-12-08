@@ -86,7 +86,7 @@ const translations = {
       },
       stats: {
         title: 'Taurel: un legado de más de 100 años',
-        subtitle: 'Algunos datos curiosos sobre nuestra compañía',
+        subtitle: 'Algunos datos sobre nuestra compañía',
         offices: 'Oficinas a nivel Nacional',
         partners: 'Aliados a nivel global para conectar sus operaciones',
         employees: 'Colaboradores para satisfacer sus necesidades',
