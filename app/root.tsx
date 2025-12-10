@@ -28,6 +28,8 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  // HubSpot ANTES que React cargue
+  { rel: "preload", as: "script", href: "//js.hs-scripts.com/50651949.js" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -38,14 +40,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        {/* Start of HubSpot Embed Code */}
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50651949.js"></script>
+        {/* End of HubSpot Embed Code */}
       </head>
       <body>
         {children}
         <ScrollRestoration />
         <Scripts />
-        {/* Start of HubSpot Embed Code */}
-        <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50651949.js"></script>
-        {/* End of HubSpot Embed Code */}
       </body>
     </html>
   );
