@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import "../styles/sobre-nosotros.css";
 
 interface Chamber {
@@ -12,30 +11,18 @@ interface ChambersSliderProps {
 }
 
 const ChambersSlider: React.FC<ChambersSliderProps> = ({ chambers }) => {
-  const duplicated = [...chambers, ...chambers, ...chambers];
+  // Duplicamos 4 veces para asegurar loop perfecto sin saltos
+  const duplicated = [...chambers, ...chambers, ...chambers, ...chambers];
 
   return (
     <div className="chambers-strip">
       <div className="container-fluid">
         <div className="chambers-slider-wrapper">
-          <motion.div
-            className="chambers-slider-track"
-            animate={{ x: [0, -100 * chambers.length] }}
-            transition={{
-              duration: chambers.length * 1,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          >
+          <div className="chambers-slider-track">
             {duplicated.map((chamber, i) => (
-              <motion.div
+              <div
                 key={`${chamber.slug}-${i}`}
                 className="chamber-logo-item"
-                whileHover={{
-                  scale: 1.1,
-                  filter: "brightness(1.1) contrast(1.1)"
-                }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <img
                   src={chamber.slug}
@@ -51,9 +38,9 @@ const ChambersSlider: React.FC<ChambersSliderProps> = ({ chambers }) => {
                 <span className="chamber-placeholder" aria-hidden>
                   {chamber.nombre}
                 </span>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

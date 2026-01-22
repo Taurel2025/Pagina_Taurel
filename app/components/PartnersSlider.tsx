@@ -45,24 +45,15 @@ const PartnersSlider: React.FC = () => {
     { nombre: "FEDECAMARAS", slug: logo19 },
   ];
 
-  const duplicatedPartners = [...partners, ...partners, ...partners];
+  // Duplicamos 4 veces para asegurar que nunca se vea el final durante la animación
+  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <div className="partners-container">
       <div className="partners-content">
         <div className="partners-with-button">
           <div className="partners-slider-wrapper">
-            <motion.div
-              className="partners-slider-track"
-              animate={{
-                x: [0, -100 * partners.length],
-              }}
-              transition={{
-                duration: partners.length * 1,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
+            <div className="partners-slider-track">
               {duplicatedPartners.map((partner, index) => (
                 <motion.div
                   key={`${partner.nombre}-${index}`}
@@ -84,7 +75,7 @@ const PartnersSlider: React.FC = () => {
                   />
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

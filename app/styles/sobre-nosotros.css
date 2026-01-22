@@ -1226,3 +1226,174 @@
     gap: 20px;
   }
 }
+
+/* ============================================
+   CARRUSELES INFINITOS - TOP BRANDS Y CHAMBERS
+   ============================================ */
+
+/* Estilos base para ambos carruseles */
+.brands-slider-wrapper,
+.chambers-slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.brands-slider-track,
+.chambers-slider-track {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  width: fit-content;
+  will-change: transform;
+}
+
+/* Animación para TopBrandsSlider (7 marcas) */
+.brands-slider-track {
+  animation: scroll-brands 35s linear infinite;
+}
+
+/* Animación para ChambersSlider (19 cámaras) */
+.chambers-slider-track {
+  animation: scroll-chambers 50s linear infinite;
+}
+
+/* Pausar al hover */
+.brands-slider-wrapper:hover .brands-slider-track,
+.chambers-slider-wrapper:hover .chambers-slider-track {
+  animation-play-state: paused;
+}
+
+/* Keyframes para TopBrands (7 items = 14.285% por item, movemos 25% para 4 sets) */
+@keyframes scroll-brands {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+/* Keyframes para Chambers (19 items, movemos 25% para 4 sets) */
+@keyframes scroll-chambers {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+/* Items individuales */
+.brand-logo-item,
+.chamber-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  min-width: 140px;
+  height: 80px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.brand-logo-item img,
+.chamber-logo-item img {
+  max-width: 130px;
+  max-height: 70px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(0.2);
+  transition: all 0.3s ease;
+}
+
+.brand-logo-item:hover img,
+.chamber-logo-item:hover img {
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+/* Placeholders (ocultos por defecto, visibles si la imagen falla) */
+.brand-placeholder,
+.chamber-placeholder {
+  display: none;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .brands-slider-track,
+  .chambers-slider-track {
+    gap: 30px;
+  }
+  
+  .brand-logo-item,
+  .chamber-logo-item {
+    min-width: 120px;
+    height: 70px;
+  }
+  
+  .brand-logo-item img,
+  .chamber-logo-item img {
+    max-width: 110px;
+    max-height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brands-slider-track {
+    animation: scroll-brands 25s linear infinite;
+  }
+  
+  .chambers-slider-track {
+    animation: scroll-chambers 35s linear infinite;
+  }
+  
+  .brands-slider-track,
+  .chambers-slider-track {
+    gap: 25px;
+  }
+  
+  .brand-logo-item,
+  .chamber-logo-item {
+    min-width: 100px;
+    height: 60px;
+  }
+  
+  .brand-logo-item img,
+  .chamber-logo-item img {
+    max-width: 90px;
+    max-height: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .brands-slider-track {
+    animation: scroll-brands 20s linear infinite;
+  }
+  
+  .chambers-slider-track {
+    animation: scroll-chambers 30s linear infinite;
+  }
+  
+  .brands-slider-track,
+  .chambers-slider-track {
+    gap: 20px;
+  }
+  
+  .brand-logo-item,
+  .chamber-logo-item {
+    min-width: 80px;
+    height: 50px;
+  }
+  
+  .brand-logo-item img,
+  .chamber-logo-item img {
+    max-width: 70px;
+    max-height: 40px;
+  }
+}

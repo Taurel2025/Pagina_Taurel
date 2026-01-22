@@ -1,4 +1,4 @@
-/* Partners Grid Styles */
+/* Partners Grid Styles - VERSIÓN SIN SALTO */
 .partners-container {
   position: relative;
   overflow: hidden;
@@ -38,13 +38,38 @@
   backdrop-filter: blur(10px);
   padding: 30px 0;
   flex: 1;
+  position: relative;
 }
 
+/* Track con animación CSS infinita PERFECTA - SIN SALTO */
 .partners-slider-track {
   display: flex;
   gap: 40px;
   align-items: center;
   width: fit-content;
+  /* Cálculo preciso: movemos exactamente 1/4 del ancho total (4 sets) */
+  animation: scroll-perfect 50s linear infinite;
+  will-change: transform;
+  /* Optimizaciones para eliminar cualquier jitter */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Pausar animación al hover */
+.partners-slider-wrapper:hover .partners-slider-track {
+  animation-play-state: paused;
+}
+
+/* Keyframes perfectamente calculados - SIN SALTO AL REINICIAR */
+@keyframes scroll-perfect {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    /* Movemos exactamente el ancho de un set completo (25% del total) */
+    transform: translate3d(calc(-100% / 4), 0, 0);
+  }
 }
 
 .partner-logo-item {
@@ -53,10 +78,14 @@
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  /* Ancho fijo exacto para cálculo preciso */
+  width: 140px;
   min-width: 140px;
   height: 80px;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  /* Prevenir saltos de renderizado */
+  transform: translateZ(0);
 }
 
 .partner-logo-item img {
@@ -67,6 +96,9 @@
   object-fit: contain;
   filter: grayscale(0.2);
   transition: all 0.3s ease;
+  /* Optimización de imagen */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .partner-logo-item:hover img {
@@ -111,6 +143,7 @@
   }
 
   .partner-logo-item {
+    width: 120px;
     min-width: 120px;
   }
 }
@@ -121,6 +154,7 @@
   }
 
   .partner-logo-item {
+    width: 100px;
     min-width: 100px;
   }
 
@@ -148,11 +182,13 @@
 
   .partners-slider-track {
     gap: 25px;
+    animation: scroll-perfect 35s linear infinite; /* Más rápido en móvil */
   }
 
   .partner-logo-item {
     height: 80px;
     padding: 10px;
+    width: 90px;
     min-width: 90px;
   }
 
@@ -163,7 +199,6 @@
   .partners-title {
     margin-bottom: 30px;
   }
-  
 }
 
 @media (max-width: 576px) {
@@ -177,11 +212,13 @@
 
   .partners-slider-track {
     gap: 20px;
+    animation: scroll-perfect 30s linear infinite; /* Aún más rápido */
   }
 
   .partner-logo-item {
     height: 70px;
     padding: 8px;
+    width: 80px;
     min-width: 80px;
   }
 
