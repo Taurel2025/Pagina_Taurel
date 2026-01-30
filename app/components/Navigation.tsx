@@ -106,7 +106,7 @@ const Navigation: React.FC = () => {
 
     setTrackingResult({ data: found });
     
-    // Esperar a que el DOM se actualice antes de dibujar el mapa
+    // Importante: Esperar a que el DOM se actualice antes de dibujar el mapa
     setTimeout(() => {
       drawMap(found);
     }, 100);
@@ -248,10 +248,20 @@ const Navigation: React.FC = () => {
         mapInstance.remove();
       }
       // Remover elementos añadidos al head
-      document.head.removeChild(leafletCss);
-      document.head.removeChild(leafletScript);
+      if (leafletCss.parentNode) {
+        document.head.removeChild(leafletCss);
+      }
+      if (leafletScript.parentNode) {
+        document.head.removeChild(leafletScript);
+      }
     };
   }, []);
+
+  // Para debugging - remover en producción
+  useEffect(() => {
+    console.log('Idioma actual en Navigation:', language);
+    console.log('Texto del botón de tracking:', t('nav.trackShipment'));
+  }, [language, t]);
 
   return (
     <>
@@ -259,7 +269,7 @@ const Navigation: React.FC = () => {
         <div className="nav-container">
           <div className="logo-container">
             <a href="/">
-              <img src="/assets/logo.png" alt="Taurel" className="logo" />
+              <img src="/app/assets/logo.png" alt="Taurel" className="logo" />
             </a>
           </div>
 
@@ -269,18 +279,36 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
-              {/* Nuevos enlaces normales */}
-              <li><a href="#" onClick={openTrackingModal}>{t('nav.trackShipment')}</a></li>
-              <li><a href="https://logistics.taurel.com/#/login" target="_blank" rel="noopener noreferrer">{t('nav.logisticsPortal')}</a></li>
             </ul>
           </div>
 
           <div className="special-links">
+            {/* Grupo de botones con divisor */}
+            <div className="button-group">
+              {/* BOTÓN CON TRADUCCIÓN - IMPORTANTE: Usa t() no texto fijo */}
+              <button onClick={openTrackingModal} className="tracking-button">
+                📍 {t('nav.trackShipment')}
+              </button>
+              <div className="button-divider"></div>
+              <a 
+                href="https://logistics.taurel.com/#/login" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="tracking-button logistics-button"
+              >
+                🚢 Taurel Logistics
+              </a>
+            </div>
+            
             <div className="header-lang-compact">
-              <img src="/assets/bandera.png" alt="Venezuela" className="flag-ven-small" />
+              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven-small" />
               <a 
                 href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  setLanguage('es');
+                  console.log('Cambiando idioma a español');
+                }}
                 className={language === 'es' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ESP
@@ -288,7 +316,11 @@ const Navigation: React.FC = () => {
               <span className="lang-sep">|</span>
               <a 
                 href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  setLanguage('en');
+                  console.log('Cambiando idioma a inglés');
+                }}
                 className={language === 'en' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ENG
@@ -308,17 +340,36 @@ const Navigation: React.FC = () => {
             <li><a href="/servicios">{t('nav.services')}</a></li>
             <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
             <li><a href="/contactanos">{t('nav.contact')}</a></li>
-            {/* Nuevos enlaces normales (sin "Empleo") */}
-            <li><a href="#" onClick={openTrackingModal}>{t('nav.trackShipment')}</a></li>
-            <li><a href="https://logistics.taurel.com/#/login" target="_blank" rel="noopener noreferrer">{t('nav.logisticsPortal')}</a></li>
+            <li>
+              <div className="button-group mobile-button-group">
+                {/* BOTÓN MÓVIL CON TRADUCCIÓN - IMPORTANTE: Usa t() no texto fijo */}
+                <button onClick={openTrackingModal} className="tracking-button">
+                  📍 {t('nav.trackShipment')}
+                </button>
+                <div className="button-divider mobile-divider"></div>
+                <a 
+                  href="https://logistics.taurel.com/#/login" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="tracking-button logistics-button"
+                >
+                  🚢 Taurel Logistics
+                </a>
+              </div>
+            </li>
+            <li><a href="#">{t('nav.jobs')}</a></li>
           </ul>
           
           <div className="mobile-lang">
             <div className="mobile-lang-content">
-              <img src="/assets/bandera.png" alt="Venezuela" className="flag-ven" />
+              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven" />
               <a 
                 href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  setLanguage('es');
+                  setIsMenuOpen(false);
+                }}
                 className={language === 'es' ? 'lang-active' : ''}
               >
                 ESP
@@ -326,7 +377,11 @@ const Navigation: React.FC = () => {
               <span className="sep">|</span>
               <a 
                 href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  setLanguage('en');
+                  setIsMenuOpen(false);
+                }}
                 className={language === 'en' ? 'lang-active' : ''}
               >
                 ENG
@@ -341,7 +396,8 @@ const Navigation: React.FC = () => {
         <div className="tracking-modal-overlay" style={{display: 'flex'}} onClick={closeTrackingModal}>
           <div className="tracking-modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="tracking-modal-header">
-              <h2>Rastrear Envío</h2>
+              {/* TÍTULO DEL MODAL CON TRADUCCIÓN */}
+              <h2>{t('nav.trackShipment')}</h2>
               <span className="tracking-close-btn" onClick={closeTrackingModal}>&times;</span>
             </div>
 
@@ -355,7 +411,9 @@ const Navigation: React.FC = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
                 />
-                <button onClick={handleSearch} className="tracking-search-btn">Buscar</button>
+                <button onClick={handleSearch} className="tracking-search-btn">
+                  {language === 'es' ? 'Buscar' : 'Search'}
+                </button>
               </div>
 
               <div id="tracking-output">
@@ -366,7 +424,9 @@ const Navigation: React.FC = () => {
                     ) : (
                       <>
                         <div className="tracking-card">
-                          <div className="tracking-card-title">📦 Información General</div>
+                          <div className="tracking-card-title">
+                            {language === 'es' ? '📦 Información General' : '📦 General Information'}
+                          </div>
                           <div className="tracking-info-grid">
                             <div className="tracking-info-item">
                               <strong>Shipment ID</strong> {trackingResult.data.shipmentId || "N/A"}
@@ -378,13 +438,15 @@ const Navigation: React.FC = () => {
                               <strong>HBL</strong> {trackingResult.data.hbl || "N/A"}
                             </div>
                             <div className="tracking-info-item">
-                              <strong>Referencia</strong> {trackingResult.data.referenceName || "N/A"}
+                              <strong>{language === 'es' ? 'Referencia' : 'Reference'}</strong> 
+                              {trackingResult.data.referenceName || "N/A"}
                             </div>
                             <div className="tracking-info-item">
-                              <strong>Carrier</strong> {trackingResult.data.carrier?.name || "N/A"}
+                              <strong>{language === 'es' ? 'Transportista' : 'Carrier'}</strong> 
+                              {trackingResult.data.carrier?.name || "N/A"}
                             </div>
                             <div className="tracking-info-item">
-                              <strong>Estado</strong> 
+                              <strong>{language === 'es' ? 'Estado' : 'Status'}</strong> 
                               <span className={`tracking-status-badge ${(trackingResult.data.currentStatus || "").includes("Delay") ? "tracking-status-delay" : "tracking-status-ok"}`}>
                                 {trackingResult.data.currentStatus || "N/A"}
                               </span>
@@ -393,21 +455,31 @@ const Navigation: React.FC = () => {
                         </div>
 
                         <div className="tracking-card">
-                          <div className="tracking-card-title">📅 Últimos Eventos</div>
+                          <div className="tracking-card-title">
+                            {language === 'es' ? '📅 Últimos Eventos' : '📅 Recent Events'}
+                          </div>
                           {(trackingResult.data.events || []).length > 0 ? (
                             trackingResult.data.events.slice(-3).reverse().map((e: any, index: number) => (
                               <div key={index}>
-                                • <strong>{new Date(e.date).toLocaleDateString("es-ES")}</strong>: {e.title || e.description}
+                                • <strong>{new Date(e.date).toLocaleDateString(language === 'es' ? "es-ES" : "en-US")}</strong>: 
+                                {e.title || e.description}
                               </div>
                             ))
                           ) : (
-                            <div>Sin eventos.</div>
+                            <div>{language === 'es' ? 'Sin eventos.' : 'No events.'}</div>
                           )}
                         </div>
 
                         <div id="tracking-map-container" style={{display: 'none'}}>
-                          <div style={{background: '#f1f1f1', color: '#333', padding: '12px 15px', fontSize: '0.9rem', fontWeight: '700', borderBottom: '1px solid #ddd'}}>
-                            🗺️ Ruta del Envío
+                          <div style={{
+                            background: '#f1f1f1', 
+                            color: '#333', 
+                            padding: '12px 15px', 
+                            fontSize: '0.9rem', 
+                            fontWeight: '700', 
+                            borderBottom: '1px solid #ddd'
+                          }}>
+                            {language === 'es' ? '🗺️ Ruta del Envío' : '🗺️ Shipment Route'}
                           </div>
                           <div id="tracking-map" style={{height: '300px', width: '100%'}}></div>
                         </div>

@@ -58,13 +58,13 @@ const translations = {
       home: 'Inicio',
       services: 'Servicios',
       aboutUs: 'Sobre Nosotros',
-      contact: 'Contáctanos',
-      trackShipment: 'Rastrea tu embarque',
+      contact: 'Contáctenos',
+      trackShipment: 'Rastree su embarque',
       logisticsPortal: 'Taurel Logistics',
       jobs: 'Empleo'
     },
     footer: {
-      tagline: 'Impulsamos tu negocio de principio a fin.',
+      tagline: 'Impulsamos su negocio de principio a fin.',
       recentPosts: 'Publicaciones Recientes',
       quickContact: 'Contacto rápido',
       name: 'Nombre y Apellido',
@@ -82,7 +82,7 @@ const translations = {
     home: {
       hero: {
         title: 'Somos su aliado logístico de principio a fin, comprometidos en cada paso: desde la planificación inicial hasta el destino final.',
-        cta: 'Conoce nuestras soluciones'
+        cta: 'Conozca nuestras soluciones'
       },
       stats: {
         title: 'Taurel: un legado de más de 100 años',
@@ -93,13 +93,13 @@ const translations = {
         clients: 'Clientes que confían en nuestras soluciones innovadoras'
       },
       timeline: {
-        title: 'Nuestra Historia, Tu Confianza...',
+        title: 'Nuestra Historia, Su Confianza...',
         year1911: 'Comenzamos con una pequeña oficina aduanal manejando trámites portuarios básicos de recepción de mercancías en puerto.',
         year1945: 'Decidimos expandir nuestras actividades al manejo del transporte de carga vía marítima, construyendo un edificio emblemático en La Guaira – Venezuela.',
-        year1994: 'Seleccionados como Agente de Aduanas y Asesor en Materia de Aduanas del METRO DE CARACAS C.A. durante 4 años (Línea 3).',
-        year1999: 'Primer Certificado del Servicio de Gestión de la Calidad. Bajo la norma COVENIN-ISO 9002:1995.',
-        year2002: 'Representación de la naviera ZIM en Venezuela. Desde 2002, representación exclusiva con la creación de ZIM Venezuela.',
-        year2024: 'Innovamos a nivel tecnológico con la creación de DragOn, nuestra APP.'
+        year1994: 'Fuimos seleccionados como Agente de Aduanas y Asesor en Materia de Aduanas del METRO DE CARACAS C.A. durante 4 años (Línea 3).',
+        year1999: 'Obtuvimos el primer Certificado del Servicio de Gestión de la Calidad. Bajo la norma COVENIN-ISO 9002:1995.',
+        year2002: 'Comenzamos a representar exclusivamente a la naviera ZIM con la creación de ZIM Venezuela.',
+        year2024: 'Innovamos a nivel tecnológico con la creación de nuestra app DragOn..'
       },
       certification: {
         title: 'Certificación ISO 9001:2025'
@@ -129,26 +129,26 @@ const translations = {
         },
         service6: {
           title: 'Almacenamiento',
-          description: 'Contamos con almacenes equipados y operativos que ofrecen soluciones de embalaje y llenado/vaciado de contenedores. También disponen de un Depósito Aduanero In Bond y se encargan de la gestión completa de la cadena de suministros.'
+          description: 'Contamos con almacenes equipados y operativos que ofrecen soluciones de embalaje y llenado/vaciado de contenedores. También disponemos de un depósito aduanero in bond y nos encargamos de la gestión completa de la cadena de suministros.'
         },
         service7: {
           title: 'Compras Internacionales',
-          description: 'Ponemos a tu disposición un equipo capacitado y de alto rendimiento que te guiará en cada paso durante todo el proceso, desde donde realizar tus compras hasta colocarlo en la puerta de tu fábrica. Cubriendo demanda desde Asia hasta Latinoamérica.'
+          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. '
         }
       },
       page: {
         title: 'Nuestras Soluciones Logísticas',
         advisory: {
           title: 'Asesoría técnica',
-          description: 'Ponemos a tu disposición asesoría técnica especializada en materia de aduanas, comercio internacional e integración económica.',
+          description: 'Ponemos a su disposición asesoría técnica especializada en materia de aduanas, comercio internacional e integración económica.',
           list1: 'Asesoramos.',
           list2: 'Informamos.',
-          list3: 'Apoyamos',
+          list3: 'Apoyamos.',
           extraInfo: 'Trámite de permisos requeridos, por las autoridades aduaneras, para el ingreso o extracción de mercancías relacionadas con el territorio nacional.'
         },
         international: {
           title: 'Transporte de Carga Internacional:',
-          highlight: 'Llegamos a más de 180 países del mundo, lo que nos permite ofrecerte:',
+          highlight: 'Llegamos a más de 180 países del mundo, lo que nos permite ofrecerle:',
           list1: 'Cobertura en todos los continentes.',
           list2: 'Servicios consolidados aéreos, marítimos y multimodal.',
           list3: 'Servicio de contenedores completos (FCL) y carga fraccionada (LCL).',
@@ -156,15 +156,15 @@ const translations = {
         },
         landTransport: {
           title: 'Transporte Terrestre:',
-          description: 'De manera eficiente, segura e integrada, colocamos a tu disposición el servicio de flete terrestre nacional, a fin de garantizar que tus cargas lleguen a tiempo en el lugar exacto, bajo el cuidado de la misma empresa, con los controles y estándares de calidad.'
+          description: 'Nuestro servicio de flete terrestre nacional garantiza que sus cargas lleguen a tiempo en el lugar exacto de forma eficiente, segura e integrada. Siempre bajo el cuidado de una misma empresa y con los controles y estándares de calidad requeridos.'
         },
         storage: {
           title: 'Almacenamiento y Distribución:',
-          description: 'Contamos con almacenes equipados y operativos que ofrecen soluciones de embalaje y llenado/vaciado de contenedores. También disponen de un Depósito Aduanero In Bond y se encargan de la gestión completa de la cadena de suministros.',
+          description: 'Contamos con almacenes equipados y operativos que ofrecen soluciones de embalaje y llenado/vaciado de contenedores. También disponemos de un depósito aduanero In Bond y nos encargamos de la gestión completa de la cadena de suministros.',
         },
         internationals: {
           title: 'Compras Internacionales:',
-          description: 'Ponemos a tu disposición un equipo capacitado y de alto rendimiento que te guiará en cada paso durante todo el proceso, desde donde realizar tus compras hasta colocarlo en la puerta de tu fábrica. Cubriendo demanda desde Asia hasta Latinoamérica. ',
+          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. ',
           list1: 'Soluciones integrales en compras y logísticas, con envíos aéreos y marítimos.',
           list2: 'Consolidación de carga, sin importar el tamaño y ubicación.',
           list3: 'Networking, investigación de mercado para importación y exportación.',
@@ -172,7 +172,7 @@ const translations = {
         },
         maritime: {
           title: 'Servicios Navieros',
-          description: 'Desde 1945, hemos perfeccionado nuestro servicio para ofrecer la excelencia que tu negocio merece. Nuestra vasta experiencia nos ha posicionado como agentes de confianza en Venezuela para las líneas navieras más importantes del mundo.',
+          description: 'Desde 1945, hemos perfeccionado nuestro servicio para ofrecer la excelencia que su negocio merece. Nuestra vasta experiencia nos ha posicionado como agentes de confianza en Venezuela para las líneas navieras más importantes del mundo.',
           containers: {
             title: 'Manejo de contenedores llenos y vacíos:',
             list1: 'Gestión total de contenedores: llenos y vacíos con movilización eficiente en los principales puertos de Venezuela.',
@@ -185,12 +185,12 @@ const translations = {
             list1: 'Agente general',
             list2: 'Agente portuario',
             list3: 'Agente protector',
-            list4: 'Manejo de carga pesada y voluminosa, y coordinación de las operaciones de carga y descarga.'
+            list4: 'Operador de carga pesada y voluminosa,Coordinador de operaciones de carga y descarga.'
           }
         },
         customs: {
           title: 'Agenciamiento Aduanal:',
-          description: 'Con más de 110 años de experiencia en el mercado venezolano, atendemos tus importaciones, exportaciones y/o tránsito de embarques; así como tu reimportación, reexportación, reexpedición, almacenamiento o depósito y/o la aplicación de los Regímenes Aduaneros Especiales, a través de todas las aduanas habilitadas marítimas, aéreas y terrestres, en las que tenemos presencia.'
+          description: 'Con más de 110 años de experiencia en el mercado venezolano, Atendemos las importaciones, exportaciones y/o tránsito de sus embarques, siempre alineados con la cambiante normativa tanto nacional como internacional. Contamos con oficinas en todas las aduanas marítimas, aéreas y terrestres habilitadas.'
         },
         logisticsChain: {
           title: 'NUESTRA CADENA LOGÍSTICA...'
@@ -242,9 +242,9 @@ const translations = {
       }
     },
     contact: {
-      title: 'Contáctanos',
-      formTitle: '¿Cómo podemos ayudarte?',
-      formDescription: 'Nuestro equipo de expertos está a su disposición para resolver atender sus consultas y ofrecer soluciones de logística. ¡Escríbenos!',
+      title: 'Contáctenos',
+      formTitle: '¿Cómo podemos ayudarle?',
+      formDescription: 'Nuestro equipo de expertos está a su disposición para resolver atender sus consultas y ofrecer soluciones de logística. ¡Escríbanos!',
       requestPlaceholder: 'Indique su solicitud o requerimiento...',
       namePlaceholder: 'Nombre y Apellido',
       emailPlaceholder: 'Correo Electrónico',
@@ -252,7 +252,7 @@ const translations = {
       companyPlaceholder: 'Empresa',
       sendButton: 'Enviar',
       sendingButton: 'Enviando...',
-      mapTitle: 'Taurel va a donde tú estés',
+      mapTitle: 'Taurel va adonde tu estés',
       mapSubtitle: 'Tu destino fácil de encontrar, visitanos en la ubicación de preferencia',
       officeHours: 'Horario de atención: ',
       officeHoursDetails: 'Lunes a Viernes. 8:00am - 5:00pm.',
@@ -266,7 +266,7 @@ const translations = {
       }
     },
     locationsBanner: {
-      tagline: 'Impulsamos tu negocio de principio a fin.'
+      tagline: 'Impulsamos su negocio de principio a fin.'
     },
     modals: {
       job: {

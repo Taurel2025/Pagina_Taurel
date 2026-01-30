@@ -61,11 +61,7 @@
   transform: scale(1.05);
 }
 
-/* Menú de navegación desktop */
-.desktop-nav {
-  margin-left: auto;
-}
-
+/* Menú de navegación desktop - SIN SOMBRAS */
 .desktop-nav ul {
   display: flex;
   list-style: none;
@@ -89,11 +85,14 @@
   position: relative;
   display: block;
   white-space: nowrap;
+  box-shadow: none;
+  text-shadow: none;
 }
 
 .desktop-nav a:hover {
   background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-1px);
+  box-shadow: none;
 }
 
 /* Enlaces especiales (Tracking + Idiomas) */
@@ -104,117 +103,104 @@
   margin-left: 2rem;
 }
 
-/* Grupo de botones con divisor */
+/* GRUPO DE BOTONES - SIN EFECTOS DE SOMBRA */
 .button-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   margin-left: 1rem;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: none;
 }
 
-.tracking-button,
-.logistics-button {
-  background: linear-gradient(135deg, #00529b, #0066cc);
+.button-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 0 6px;
+}
+
+/* BOTÓN RASTREA TU EMBARQUE - SIN NINGÚN EFECTO BLANCO */
+.tracking-button {
+  background: transparent;
   color: white;
   border: none;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  border-radius: 25px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   white-space: nowrap;
   text-decoration: none;
+  box-shadow: none;
+  text-shadow: none;
+  position: relative;
+  overflow: hidden;
 }
 
-.tracking-button:hover,
-.logistics-button:hover {
-  background: linear-gradient(135deg, #003f7a, #0052cc);
+/* ELIMINADO COMPLETAMENTE EL ::before QUE CAUSABA LA SOMBRA BLANCA */
+.tracking-button::before {
+  display: none;
+  content: none;
+}
+
+.tracking-button:hover {
   transform: translateY(-1px);
+  box-shadow: none;
+  background: transparent;
 }
 
-.button-divider {
-  width: 1px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.4);
-  margin: 0 6px;
-}
-
-/* ===== MÓVILES ===== */
-@media (max-width: 768px) {
-  .button-group {
-    flex-direction: column;
-    width: 100%;
-    margin: 10px 0;
-    gap: 10px;
-  }
-
-  .button-divider {
-    display: none; /* barra vertical fuera */
-  }
-
-  .tracking-button,
-  .logistics-button {
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
-    font-size: 15px;
-  }
-}
-
-/* ===== MÓVILES MUY PEQUEÑOS ===== */
-@media (max-width: 360px) {
-  .tracking-button,
-  .logistics-button {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
-
-.button-divider {
-  width: 1px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.3);
-  margin: 0 8px;
-}
-
-/* Botón de Rastreo y Botón Taurel Logistics (Estilos Unificados) */
-.tracking-button,
-.logistics-button {
-  background: linear-gradient(135deg, #00529b, #0066cc);
-  color: white;
-  border: none;           /* Necesario si es <button> */
-  text-decoration: none;  /* Necesario si es <a> */
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 82, 155, 0.3);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  white-space: nowrap;
-}
-
-.tracking-button:hover,
-.logistics-button:hover {
-  background: linear-gradient(135deg, #003f7a, #0052cc);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 82, 155, 0.4);
-}
-
-.tracking-button:active,
-.logistics-button:active {
+.tracking-button:active {
   transform: translateY(0);
 }
 
+/* BOTÓN TAUREL LOGISTICS - SIN NINGÚN EFECTO BLANCO */
+.logistics-button {
+  background: transparent;
+  color: white;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: none;
+  text-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
 
+/* ELIMINADO COMPLETAMENTE EL ::before QUE CAUSABA LA SOMBRA BLANCA */
+.logistics-button::before {
+  display: none;
+  content: none;
+}
+
+.logistics-button:hover {
+  transform: translateY(-1px);
+  color: white;
+  box-shadow: none;
+  background: transparent;
+}
+
+.logistics-button:active {
+  transform: translateY(0);
+}
 
 /* Selector de idiomas */
 .header-lang-compact {
@@ -350,26 +336,11 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.mobile-nav .tracking-button {
-  margin: 10px 0;
+/* Botones en menú móvil */
+.mobile-nav-button {
   width: 100%;
   justify-content: center;
-}
-
-/* Grupo de botones en móvil */
-.mobile-button-group {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  width: 100%;
-  margin: 10px 0;
-}
-
-.mobile-divider {
-  width: 1px;
-  height: 25px;
-  background: rgba(255, 255, 255, 0.3);
-  margin: 0 6px;
+  margin: 5px 0;
 }
 
 /* Idiomas en móvil */
@@ -633,11 +604,18 @@
   
   .button-group {
     margin-left: 0.5rem;
+    padding: 3px;
   }
   
   .button-divider {
-    margin: 0 6px;
+    margin: 0 3px;
     height: 25px;
+  }
+  
+  .tracking-button,
+  .logistics-button {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }
 
@@ -659,34 +637,7 @@
   }
   
   .button-group {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    margin: 10px 0;
-  }
-  
-  .button-divider {
-    width: 80%;
-    height: 1px;
-    margin: 5px auto;
-  }
-  
-  .mobile-button-group {
-    flex-direction: column;
-    width: 100%;
-    margin: 10px 0;
-  }
-  
-  .mobile-divider {
-    display: block;
-    width: 60%;
-    margin: 8px auto;
-  }
-  
-  .tracking-button {
-    margin: 5px 0;
-    width: 100%;
-    justify-content: center;
+    display: none;
   }
   
   .tracking-modal-content {
@@ -712,9 +663,11 @@
     height: 40px;
   }
   
-  .tracking-button {
-    padding: 10px 16px;
-    font-size: 13px;
+  .tracking-button,
+  .logistics-button {
+    padding: 10px 14px;
+    font-size: 12px;
+    letter-spacing: 0.3px;
   }
   
   .header-lang-compact {
@@ -724,9 +677,4 @@
   .flag-ven-small {
     width: 24px;
   }
-  
-  .button-group {
-    margin-left: 0;
-  }
 }
-

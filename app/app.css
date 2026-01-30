@@ -6,7 +6,7 @@
 @import "./styles/servicios.css";
 @import "./styles/sobre-nosotros.css";
 @import "./styles/contactanos.css";
-
+@import "./styles/chatbot.css";
 /* Importar estilos de Swiper */
 @import "swiper/css";
 @import "swiper/css/pagination";

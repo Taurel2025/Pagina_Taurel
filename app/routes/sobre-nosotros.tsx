@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import AboutUsSlider from "../components/AboutUsSlider";
 import ChambersSlider from "../components/ChambersSlider";
 import CertificationModal from "../components/CertificationModal";
+// import TopBrandsSlider from "~/contexts/TopBrandsSlider"; // ← COMENTADO
 import imageG1 from "../assets/package-nosotros/Logo camara de comercio 1.png";
 import imageG2 from "../assets/package-nosotros/Logo camara de comercio 2.png";
 import imageG3 from "../assets/package-nosotros/Logo camara de comercio 3.png";
@@ -34,7 +35,6 @@ import backgroundHexLeft from "../assets/Hexagonos-11.png";
 import backgroundHexRight from "../assets/Hexagonos 2.png";
 import isoLogo from "../assets/Logo-ISO.png";
 import fondonormaLogo from "../assets/brillante _FONDONORMA_ 1.png";
-import TopBrandsSlider from "~/contexts/TopBrandsSlider";
 
 export function meta() {
   return [
@@ -114,7 +114,10 @@ export default function SobreNosotros() {
   return (
     <div className="sobre-nosotros-page">
       <AboutUsSlider />
-      <TopBrandsSlider />
+      
+      {/* CARRUSEL DE MARCAS COMENTADO - Para reactivar, descomenta las líneas debajo */}
+      {/* <TopBrandsSlider /> */}
+      
       <section className="values-section section">
         <div className="container">
           <div className="values-header">
