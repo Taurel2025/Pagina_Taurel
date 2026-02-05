@@ -24,6 +24,7 @@ const Chatbot: React.FC = () => {
     }, 300);
   };
 
+  // Manejar errores del iframe
   const handleIframeError = () => {
     setHasError(true);
     setIsLoaded(true);
@@ -31,7 +32,7 @@ const Chatbot: React.FC = () => {
 
   return (
     <>
-      {/* Botón flotante con imagen de avatar */}
+      {/* Botón flotante con imagen de avatar desde Imgur */}
       <button 
         className={`chatbot-toggle ${isOpen ? 'open' : ''} ${isHovering ? 'hovering' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
@@ -41,12 +42,17 @@ const Chatbot: React.FC = () => {
         title="Asistente Virtual Taurel - Haz clic para chatear"
       >
         <div className="chatbot-avatar-container">
-          {/* Imagen del avatar - se muestra cuando está cerrado */}
+          {/* Imagen del avatar desde Imgur - se muestra cuando está cerrado */}
           {!isOpen && (
             <img 
-              src="/app/assets/chatbot-avatar.png" 
+              src="https://i.imgur.com/pkirPow.png" 
               alt="Avatar del Asistente Taurel" 
               className="chatbot-avatar-image"
+              onError={(e) => {
+                // Fallback si la imagen no carga
+                e.currentTarget.src = 'https://ui-avatars.com/api/?name=Taurel&background=00529b&color=fff&size=128';
+                e.currentTarget.alt = 'Avatar de respaldo';
+              }}
             />
           )}
           
@@ -56,7 +62,7 @@ const Chatbot: React.FC = () => {
           )}
         </div>
         
-        {/* Efecto de pulso cuando hay nuevos mensajes (opcional) */}
+        {/* Efecto de pulso */}
         {!isOpen && <div className="chatbot-pulse"></div>}
         
         {/* Tooltip */}
@@ -70,12 +76,17 @@ const Chatbot: React.FC = () => {
         <div className="chatbot-window">
           <div className="chatbot-header">
             <div className="chatbot-header-content">
-              {/* Avatar en el header también */}
+              {/* Avatar en el header también desde Imgur */}
               <div className="chatbot-header-avatar">
                 <img 
-                  src="/app/assets/chatbot-avatar.png" 
+                  src="https://i.imgur.com/pkirPow.png" 
                   alt="Avatar del Asistente" 
                   className="header-avatar-image"
+                  onError={(e) => {
+                    // Fallback si la imagen no carga
+                    e.currentTarget.src = 'https://ui-avatars.com/api/?name=Taurel&background=00529b&color=fff&size=45';
+                    e.currentTarget.alt = 'Avatar de respaldo';
+                  }}
                 />
               </div>
               <div className="chatbot-title">

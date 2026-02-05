@@ -257,19 +257,23 @@ const Navigation: React.FC = () => {
     };
   }, []);
 
-  // Para debugging - remover en producción
-  useEffect(() => {
-    console.log('Idioma actual en Navigation:', language);
-    console.log('Texto del botón de tracking:', t('nav.trackShipment'));
-  }, [language, t]);
-
   return (
     <>
       <nav className="navigation">
         <div className="nav-container">
           <div className="logo-container">
             <a href="/">
-              <img src="/app/assets/logo.png" alt="Taurel" className="logo" />
+              {/* LOGO ACTUALIZADO con enlace de Imgur */}
+              <img 
+                src="https://i.imgur.com/OCJNAWD.png" 
+                alt="Taurel" 
+                className="logo"
+                onError={(e) => {
+                  // Fallback si la imagen no carga
+                  e.currentTarget.src = 'https://via.placeholder.com/150x50/00529b/FFFFFF?text=TAUREL';
+                  e.currentTarget.alt = 'Logo Taurel (fallback)';
+                }}
+              />
             </a>
           </div>
 
@@ -285,7 +289,7 @@ const Navigation: React.FC = () => {
           <div className="special-links">
             {/* Grupo de botones con divisor */}
             <div className="button-group">
-              {/* BOTÓN CON TRADUCCIÓN - IMPORTANTE: Usa t() no texto fijo */}
+              {/* BOTÓN CON TRADUCCIÓN */}
               <button onClick={openTrackingModal} className="tracking-button">
                 📍 {t('nav.trackShipment')}
               </button>
@@ -301,14 +305,19 @@ const Navigation: React.FC = () => {
             </div>
             
             <div className="header-lang-compact">
-              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven-small" />
+              {/* Bandera - Puedes cambiar esto a Imgur si quieres */}
+              <img 
+                src="/app/assets/bandera.png" 
+                alt="Venezuela" 
+                className="flag-ven-small"
+                onError={(e) => {
+                  // Fallback para bandera
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <a 
                 href="#" 
-                onClick={(e) => {
-                  e.preventDefault(); 
-                  setLanguage('es');
-                  console.log('Cambiando idioma a español');
-                }}
+                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
                 className={language === 'es' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ESP
@@ -316,11 +325,7 @@ const Navigation: React.FC = () => {
               <span className="lang-sep">|</span>
               <a 
                 href="#" 
-                onClick={(e) => {
-                  e.preventDefault(); 
-                  setLanguage('en');
-                  console.log('Cambiando idioma a inglés');
-                }}
+                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
                 className={language === 'en' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ENG
@@ -342,7 +347,7 @@ const Navigation: React.FC = () => {
             <li><a href="/contactanos">{t('nav.contact')}</a></li>
             <li>
               <div className="button-group mobile-button-group">
-                {/* BOTÓN MÓVIL CON TRADUCCIÓN - IMPORTANTE: Usa t() no texto fijo */}
+                {/* BOTÓN MÓVIL CON TRADUCCIÓN */}
                 <button onClick={openTrackingModal} className="tracking-button">
                   📍 {t('nav.trackShipment')}
                 </button>
@@ -362,14 +367,19 @@ const Navigation: React.FC = () => {
           
           <div className="mobile-lang">
             <div className="mobile-lang-content">
-              <img src="/app/assets/bandera.png" alt="Venezuela" className="flag-ven" />
+              {/* Bandera en versión móvil */}
+              <img 
+                src="/app/assets/bandera.png" 
+                alt="Venezuela" 
+                className="flag-ven"
+                onError={(e) => {
+                  // Fallback para bandera
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <a 
                 href="#" 
-                onClick={(e) => {
-                  e.preventDefault(); 
-                  setLanguage('es');
-                  setIsMenuOpen(false);
-                }}
+                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
                 className={language === 'es' ? 'lang-active' : ''}
               >
                 ESP
@@ -377,11 +387,7 @@ const Navigation: React.FC = () => {
               <span className="sep">|</span>
               <a 
                 href="#" 
-                onClick={(e) => {
-                  e.preventDefault(); 
-                  setLanguage('en');
-                  setIsMenuOpen(false);
-                }}
+                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
                 className={language === 'en' ? 'lang-active' : ''}
               >
                 ENG

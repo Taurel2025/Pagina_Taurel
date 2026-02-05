@@ -36,19 +36,19 @@ const Footer = () => {
     {
       id: "1",
       image: instaPost1,
-      url: "https://www.instagram.com/taurel_oficial/",
+      url: "https://www.instagram.com/p/DUD3gbfEZLJ/",
       alt: "Publicación de Instagram 1"
     },
     {
       id: "2",
       image: instaPost2,
-      url: "https://www.instagram.com/taurel_oficial/",
+      url: "https://www.instagram.com/p/DT-t7uMETgN/",
       alt: "Publicación de Instagram 2"
     },
     {
       id: "3",
       image: instaPost3,
-      url: "https://www.instagram.com/taurel_oficial/",
+      url: "https://www.instagram.com/p/DT2vdKOETc1/?img_index=1",
       alt: "Publicación de Instagram 3"
     }
   ];
