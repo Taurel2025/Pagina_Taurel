@@ -154,19 +154,38 @@ export default function Contactanos() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setFormData({
-        solicitud: "",
-        nombre: "",
-        email: "",
-        telefono: "",
-        empresa: "",
+      const response = await fetch("https://formspree.io/f/mbdajrrl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          solicitud: formData.solicitud,
+          nombre: formData.nombre,
+          email: formData.email,
+          telefono: formData.telefono,
+          empresa: formData.empresa,
+          _subject: `Nueva solicitud de contacto: ${formData.solicitud}`,
+          _replyto: formData.email,
+        }),
       });
 
-      alert("¡Formulario enviado exitosamente!");
+      if (response.ok) {
+        setFormData({
+          solicitud: "",
+          nombre: "",
+          email: "",
+          telefono: "",
+          empresa: "",
+        });
+        alert("¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.");
+      } else {
+        throw new Error("Error al enviar");
+      }
     } catch (error) {
       console.error("Error al enviar formulario:", error);
-      alert("Error al enviar el formulario. Por favor, inténtelo de nuevo.");
+      alert("Error al enviar el mensaje. Por favor, inténtelo de nuevo.");
     } finally {
       setIsSubmitting(false);
     }
