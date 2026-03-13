@@ -133,7 +133,11 @@ const translations = {
         },
         service7: {
           title: 'Compras Internacionales',
-          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. '
+          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. '
+        },
+        service8: {
+          title: 'Carga Proyecto',
+          description: 'Ofrecemos soluciones integrales para el movimiento de cargas sobredimensionadas y extrapesadas, garantizando el éxito de sus operaciones más complejas. Este servicio incluye:\n• Ejecución y control técnico de proyectos industriales.\n• Análisis riguroso de riesgos y estudios de ruta personalizados.\n• Servicio Multimodal Global adaptado a las dimensiones de su carga.'
         }
       },
       page: {
@@ -164,7 +168,7 @@ const translations = {
         },
         internationals: {
           title: 'Compras Internacionales:',
-          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. ',
+          description: 'Ponemos a su disposición un equipo capacitado y de alto rendimiento, que le guiará durante todo el proceso, desde dónde realizar sus compras hasta el despacho en su puerta. Cubrimos demanda desde Asia hasta América latina. ',
           list1: 'Soluciones integrales en compras y logísticas, con envíos aéreos y marítimos.',
           list2: 'Consolidación de carga, sin importar el tamaño y ubicación.',
           list3: 'Networking, investigación de mercado para importación y exportación.',
@@ -372,6 +376,10 @@ const translations = {
         service7: {
           title: 'International Purchases',
           description: 'We provide you with a trained and high-performance team that will guide you at every step throughout the entire process, from where to make your purchases to placing it at your factory door. Covering demand from Asia to Latin America.'
+        },
+        service8: {
+          title: 'Project Cargo',
+          description: 'We offer comprehensive solutions for the movement of oversized and overweight cargo, ensuring the success of your most complex operations. This service includes:\n• Technical execution and control of industrial projects.\n• Rigorous risk analysis and customized route studies.\n• Global Multimodal Service adapted to the dimensions of your cargo.'
         }
       },
       page: {

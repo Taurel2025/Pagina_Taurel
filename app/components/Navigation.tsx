@@ -64,6 +64,8 @@ const Navigation: React.FC = () => {
   const openTrackingModal = () => {
     setTrackingModalOpen(true);
     initializeTracking();
+    // Cerrar el menú móvil si está abierto
+    setIsMenuOpen(false);
     setTimeout(() => {
       const searchInput = document.getElementById('tracking-search-input') as HTMLInputElement;
       if (searchInput) searchInput.focus();
@@ -341,10 +343,10 @@ const Navigation: React.FC = () => {
         {/* Mobile Navigation */}
         <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
           <ul>
-            <li><a href="/">{t('nav.home')}</a></li>
-            <li><a href="/servicios">{t('nav.services')}</a></li>
-            <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
-            <li><a href="/contactanos">{t('nav.contact')}</a></li>
+            <li><a href="/" onClick={() => setIsMenuOpen(false)}>{t('nav.home')}</a></li>
+            <li><a href="/servicios" onClick={() => setIsMenuOpen(false)}>{t('nav.services')}</a></li>
+            <li><a href="/sobre-nosotros" onClick={() => setIsMenuOpen(false)}>{t('nav.aboutUs')}</a></li>
+            <li><a href="/contactanos" onClick={() => setIsMenuOpen(false)}>{t('nav.contact')}</a></li>
             <li>
               <div className="button-group mobile-button-group">
                 {/* BOTÓN MÓVIL CON TRADUCCIÓN */}
@@ -362,7 +364,15 @@ const Navigation: React.FC = () => {
                 </a>
               </div>
             </li>
-            <li><a href="#">{t('nav.jobs')}</a></li>
+            {/* BOTÓN EMPLEO OCULTO TEMPORALMENTE */}
+            {/* <li>
+              <button 
+                className="job-button"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('nav.jobs')}
+              </button>
+            </li> */}
           </ul>
           
           <div className="mobile-lang">

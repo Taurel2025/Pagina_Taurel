@@ -7,6 +7,7 @@ import transporteTerrestre from '../assets/home-carousel/transporteterrestre.png
 import navieros from '../assets/home-carousel/trasnporte-carga.png';
 import almacenamiento from '../assets/home-carousel/almacenamiento.png';
 import compras from '../assets/home-carousel/compras-internacioles.png';
+import cargaProyecto from '../assets/home-carousel/Carga-Proyecto.png';
 
 interface ServicesSliderProps {
   className?: string;
@@ -58,6 +59,12 @@ export default function ServicesSlider({ className = '' }: ServicesSliderProps) 
       description: t('services.slider.service5.description'),
       image: navieros,
       textAlign: 'left'
+    },
+    {
+      title: t('services.slider.service8.title'),
+      description: t('services.slider.service8.description'),
+      image: cargaProyecto,
+      textAlign: 'right'
     }
   ];
 
@@ -97,7 +104,7 @@ export default function ServicesSlider({ className = '' }: ServicesSliderProps) 
           <div className="slide-content">
             <div className={`slide-text slide-text-${service.textAlign}`}>
               <h2>{service.title}</h2>
-              <p>{service.description}</p>
+              <p style={{ whiteSpace: 'pre-line' }}>{service.description}</p>
             </div>
           </div>
         </div>
