@@ -22,49 +22,50 @@ export default function ServicesSlider({ className = '' }: ServicesSliderProps) 
       title: t('services.slider.service1.title'),
       description: t('services.slider.service1.description'),
       image: asesoria,
-      textAlign: 'left'
+      textAlign: 'left' // 1. Izquierda
     },
     {
       title: t('services.slider.service3.title'),
       description: t('services.slider.service3.description'),
       image: transporteCarga,
-      textAlign: 'right'
+      textAlign: 'right' // 2. Derecha
     },
     {
       title: t('services.slider.service2.title'),
       description: t('services.slider.service2.description'),
       image: aduanas,
-      textAlign: 'left'
+      textAlign: 'left' // 3. Izquierda
     },
     {
       title: t('services.slider.service6.title'),
       description: t('services.slider.service6.description'),
       image: almacenamiento,
-      textAlign: 'right'
+      textAlign: 'right' // 4. Derecha
     },
     {
       title: t('services.slider.service4.title'),
       description: t('services.slider.service4.description'),
       image: transporteTerrestre,
-      textAlign: 'left'
+      textAlign: 'left' // 5. Izquierda
     },
     {
       title: t('services.slider.service7.title'),
       description: t('services.slider.service7.description'),
       image: compras,
-      textAlign: 'right'
+      textAlign: 'right' // 6. Derecha
+    },
+    {
+      title: t('services.slider.service8.title'), // Carga Proyecto movido aquí
+      description: t('services.slider.service8.description'),
+      image: cargaProyecto,
+      textAlign: 'left', // 7. Izquierda (sobre su fondo azul natural)
+      noGradient: true 
     },
     {
       title: t('services.slider.service5.title'),
       description: t('services.slider.service5.description'),
       image: navieros,
-      textAlign: 'left'
-    },
-    {
-      title: t('services.slider.service8.title'),
-      description: t('services.slider.service8.description'),
-      image: cargaProyecto,
-      textAlign: 'right'
+      textAlign: 'right' // 8. Derecha (para cerrar el patrón)
     }
   ];
 
@@ -93,10 +94,12 @@ export default function ServicesSlider({ className = '' }: ServicesSliderProps) 
           key={index}
           className={`slide slide-${index + 1} ${activeSlide === index ? 'active' : ''}`}
           style={{
-            backgroundImage: `linear-gradient(${service.textAlign === 'left'
-              ? '270deg, rgba(26, 144, 206, 0) 0%, rgba(26, 144, 206, 0.5) 43.32%, #1a90ce 99.19%'
-              : '90deg, rgba(26, 144, 206, 0) 0%, rgba(26, 144, 206, 0.5) 43.32%, #1a90ce 99.19%'
-              }), url(${service.image})`,
+            backgroundImage: service.noGradient 
+              ? `url(${service.image})` 
+              : `linear-gradient(${service.textAlign === 'left'
+                  ? '270deg, rgba(26, 144, 206, 0) 0%, rgba(26, 144, 206, 0.5) 43.32%, #1a90ce 99.19%'
+                  : '90deg, rgba(26, 144, 206, 0) 0%, rgba(26, 144, 206, 0.5) 43.32%, #1a90ce 99.19%'
+                }), url(${service.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
@@ -135,7 +138,6 @@ export default function ServicesSlider({ className = '' }: ServicesSliderProps) 
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-
         </button>
       </div>
     </div>
