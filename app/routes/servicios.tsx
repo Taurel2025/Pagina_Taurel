@@ -13,6 +13,7 @@ import servicioImg4 from "../assets/servicio-img-4.png";
 import hexagono14 from "../assets/Hexagonos 14.png";
 import cadenaImagen1 from "../assets/cadena-imagen1.png";
 import cadenaImagen2 from "../assets/cadena-imagen2.png";
+import cargaProyectoImg from "../assets/carga-proyecto-seccion.png";
 
 export function meta() {
   return [
@@ -329,6 +330,96 @@ export default function Servicios() {
               <p className="service-description">
                 {t("services.page.customs.description")}
               </p>
+            </AnimatedElement>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN CARGA PROYECTO - NUEVA */}
+      <section className="project-cargo-section section">
+        <div className="container">
+          <div className="service-content-wrapper project-cargo-layout">
+            <AnimatedElement
+              animation="fadeRight"
+              className="service-image-content project-cargo-image"
+            >
+              <motion.div
+                className="hexagon-image-container"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <motion.img
+                  src={cargaProyectoImg}
+                  alt="Carga Proyecto - Operación de carga pesada"
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </motion.div>
+            </AnimatedElement>
+
+            <AnimatedElement
+              animation="fadeLeft"
+              className="service-text-content project-cargo-text"
+            >
+              <div className="project-cargo-header">
+                <div className="service-icon-title">
+                  <img
+                    style={{ width: "40px", height: "40px" }}
+                    src={hexagonIcon}
+                    alt=""
+                  />
+                  <h2>{t("services.page.projectCargo.title")}</h2>
+                </div>
+                <p className="project-cargo-subtitle">
+                  {t("services.page.projectCargo.subtitle")}
+                </p>
+              </div>
+
+              <p className="service-description project-cargo-intro">
+                {t("services.page.projectCargo.intro")}
+              </p>
+
+              <div className="project-cargo-services">
+                <h4 className="project-cargo-section-title">
+                  {t("services.page.projectCargo.servicesTitle")}
+                </h4>
+                <div className="project-cargo-grid">
+                  <div className="project-cargo-item">
+                    <h5>{t("services.page.projectCargo.projectManagement.title")}</h5>
+                    <p>{t("services.page.projectCargo.projectManagement.description")}</p>
+                  </div>
+                  <div className="project-cargo-item">
+                    <h5>{t("services.page.projectCargo.riskAnalysis.title")}</h5>
+                    <p>{t("services.page.projectCargo.riskAnalysis.description")}</p>
+                  </div>
+                  <div className="project-cargo-item">
+                    <h5>{t("services.page.projectCargo.multimodal.title")}</h5>
+                    <p>{t("services.page.projectCargo.multimodal.description")}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="project-cargo-capabilities">
+                <h4 className="project-cargo-section-title">
+                  {t("services.page.projectCargo.capabilitiesTitle")}
+                </h4>
+                <div className="project-cargo-grid capabilities-grid">
+                  <div className="project-cargo-item capability-item">
+                    <h5>{t("services.page.projectCargo.specializedTransport.title")}</h5>
+                    <p>{t("services.page.projectCargo.specializedTransport.description")}</p>
+                  </div>
+                  <div className="project-cargo-item capability-item">
+                    <h5>{t("services.page.projectCargo.infrastructure.title")}</h5>
+                    <p>{t("services.page.projectCargo.infrastructure.description")}</p>
+                  </div>
+                  <div className="project-cargo-item capability-item">
+                    <h5>{t("services.page.projectCargo.operationalFlexibility.title")}</h5>
+                    <p>{t("services.page.projectCargo.operationalFlexibility.description")}</p>
+                  </div>
+                </div>
+              </div>
             </AnimatedElement>
           </div>
         </div>
