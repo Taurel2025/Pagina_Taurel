@@ -1084,3 +1084,59 @@
     font-size: 1rem;
   }
 }
+
+/* Asegurar que todas las imágenes hexagonales tengan el mismo tamaño y alineación */
+.service-image-content .hexagon-image-container,
+.project-cargo-section-light .hexagon-image-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.project-cargo-section-light .hexagon-image-container img,
+.service-image-content .hexagon-image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Asegurar que la sección de Carga Proyecto tenga el mismo fondo claro */
+.project-cargo-section-light {
+  background-color: #ffffff;
+}
+
+.project-cargo-section-light .service-text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Alinear el hexágono decorativo igual que en Asesoría Técnica */
+.project-cargo-section-light .hexagonos-decorativos {
+  position: absolute;
+  right: -100px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: auto;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@media (max-width: 992px) {
+  .project-cargo-section-light .hexagonos-decorativos {
+    right: -50px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-cargo-section-light .hexagonos-decorativos {
+    display: none;
+  }
+  
+  .service-image-content .hexagon-image-container,
+  .project-cargo-section-light .hexagon-image-container {
+    max-width: 350px;
+  }
+}

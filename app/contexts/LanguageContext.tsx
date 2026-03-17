@@ -200,35 +200,11 @@ const translations = {
           title: 'NUESTRA CADENA LOGÍSTICA...'
         },
         projectCargo: {
-          title: 'CARGA PROYECTO',
-          subtitle: 'Soluciones integrales para cargas sobredimensionadas',
-          intro: 'En Taurel, transformamos la complejidad logística en operaciones exitosas.',
-          servicesTitle: 'Nuestros Servicios Especializados:',
-          projectManagement: {
-            title: 'Gestión de Proyectos:',
-            description: 'Ejecución y control técnico de proyectos industriales de principio a fin.'
-          },
-          riskAnalysis: {
-            title: 'Análisis de Riesgos:',
-            description: 'Evaluación rigurosa y estudios de ruta personalizados para máxima seguridad.'
-          },
-          multimodal: {
-            title: 'Logística Multimodal Global:',
-            description: 'Transporte adaptado por aire, mar y tierra según las dimensiones de su carga.'
-          },
-          capabilitiesTitle: 'Capacidades que nos respaldan:',
-          specializedTransport: {
-            title: 'Transporte Especializado:',
-            description: 'Manejo de carga sobredimensionada (Oversized), extrapesada (heavy haul) y transfronteriza (cross-border).'
-          },
-          infrastructure: {
-            title: 'Infraestructura Robusta:',
-            description: 'Red de 1.000 camiones y 9 oficinas locales a su disposición.'
-          },
-          operationalFlexibility: {
-            title: 'Flexibilidad Operativa:',
-            description: 'Servicios de acarreo, carga completa (FTL) y consolidada (LTL).'
-          }
+          title: 'Carga Proyecto',
+          description: 'Ofrecemos soluciones integrales para el movimiento de cargas sobredimensionadas y extrapesadas, garantizando el éxito de sus operaciones más complejas.',
+          list1: 'Ejecución y control técnico de proyectos industriales de principio a fin.',
+          list2: 'Análisis riguroso de riesgos y estudios de ruta personalizados para máxima seguridad.',
+          list3: 'Servicio Multimodal Global adaptado a las dimensiones de su carga.'
         }
       }
     },
@@ -473,35 +449,11 @@ const translations = {
           title: 'OUR LOGISTICS CHAIN...'
         },
         projectCargo: {
-          title: 'PROJECT CARGO',
-          subtitle: 'Comprehensive solutions for oversized cargo',
-          intro: 'At Taurel, we transform logistics complexity into successful operations.',
-          servicesTitle: 'Our Specialized Services:',
-          projectManagement: {
-            title: 'Project Management:',
-            description: 'Execution and technical control of industrial projects from start to finish.'
-          },
-          riskAnalysis: {
-            title: 'Risk Analysis:',
-            description: 'Rigorous evaluation and customized route studies for maximum security.'
-          },
-          multimodal: {
-            title: 'Global Multimodal Logistics:',
-            description: 'Transport adapted by air, sea and land according to your cargo dimensions.'
-          },
-          capabilitiesTitle: 'Capabilities that support us:',
-          specializedTransport: {
-            title: 'Specialized Transport:',
-            description: 'Handling of oversized cargo, heavy haul and cross-border transportation.'
-          },
-          infrastructure: {
-            title: 'Robust Infrastructure:',
-            description: 'Network of 1,000 trucks and 9 local offices at your disposal.'
-          },
-          operationalFlexibility: {
-            title: 'Operational Flexibility:',
-            description: 'Hauling services, full truckload (FTL) and less than truckload (LTL).'
-          }
+          title: 'Project Cargo',
+          description: 'We offer comprehensive solutions for the movement of oversized and overweight cargo, ensuring the success of your most complex operations.',
+          list1: 'Technical execution and control of industrial projects from start to finish.',
+          list2: 'Rigorous risk analysis and customized route studies for maximum security.',
+          list3: 'Global Multimodal Service adapted to the dimensions of your cargo.'
         }
       }
     },
