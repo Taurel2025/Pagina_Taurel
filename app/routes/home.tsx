@@ -122,7 +122,7 @@ export default function Home() {
             <div className="stats-grid">
               <div className="stat-card">
                 <h3>
-                  <CountUp end={9} duration={2.5} prefix="+" />
+                  <CountUp end={8} duration={2.5} prefix="+" />
                 </h3>
                 <p>{t('home.stats.offices')}</p>
               </div>

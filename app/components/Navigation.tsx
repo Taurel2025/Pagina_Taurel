@@ -285,6 +285,7 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
+              <li><a href="/empleo">{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace a Empleo */}
             </ul>
           </div>
 
@@ -347,6 +348,7 @@ const Navigation: React.FC = () => {
             <li><a href="/servicios" onClick={() => setIsMenuOpen(false)}>{t('nav.services')}</a></li>
             <li><a href="/sobre-nosotros" onClick={() => setIsMenuOpen(false)}>{t('nav.aboutUs')}</a></li>
             <li><a href="/contactanos" onClick={() => setIsMenuOpen(false)}>{t('nav.contact')}</a></li>
+            <li><a href="/empleo" onClick={() => setIsMenuOpen(false)}>{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace móvil a Empleo */}
             <li>
               <div className="button-group mobile-button-group">
                 {/* BOTÓN MÓVIL CON TRADUCCIÓN */}
@@ -364,15 +366,6 @@ const Navigation: React.FC = () => {
                 </a>
               </div>
             </li>
-            {/* BOTÓN EMPLEO OCULTO TEMPORALMENTE */}
-            {/* <li>
-              <button 
-                className="job-button"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('nav.jobs')}
-              </button>
-            </li> */}
           </ul>
           
           <div className="mobile-lang">

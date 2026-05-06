@@ -35,21 +35,44 @@ export default function Servicios() {
         <h2>{t("services.page.title")}</h2>
       </div>
 
-      {/* SECCIÓN CARGA PROYECTO - PRIMERA EN EL ORDEN, CON FONDO CLARO IGUAL A ASESORÍA TÉCNICA */}
-      <section className="advisory-section section project-cargo-section-light">
+      {/* SECCIÓN CARGA PROYECTO - PRIMERA EN EL ORDEN, FONDO AZUL CLARITO, HEXÁGONO A LA IZQUIERDA */}
+      <section 
+        className="advisory-section section project-cargo-section-alt" 
+        style={{ backgroundColor: '#f8faff' }}
+      >
         <motion.img
           src={heaxogono3}
           alt="Hexágonos decorativos"
-          className="hexagonos-decorativos"
+          className="hexagonos-decorativos-left"
           whileHover={{
             scale: 1.05,
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         />
         <div className="container">
-          <div className="service-content-wrapper">
+          <div className="service-content-wrapper project-cargo-reverse">
             <AnimatedElement
               animation="fadeLeft"
+              className="service-image-content"
+            >
+              <motion.div
+                className="hexagon-image-container"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <motion.img
+                  src={cargaProyectoImg}
+                  alt="Carga Proyecto - Operación de carga pesada"
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </motion.div>
+            </AnimatedElement>
+
+            <AnimatedElement
+              animation="fadeRight"
               className="service-text-content"
             >
               <div className="service-icon-title">
@@ -68,26 +91,9 @@ export default function Servicios() {
                 <li>{t("services.page.projectCargo.list2")}</li>
                 <li>{t("services.page.projectCargo.list3")}</li>
               </ul>
-            </AnimatedElement>
-
-            <AnimatedElement
-              animation="fadeRight"
-              className="service-image-content"
-            >
-              <motion.div
-                className="hexagon-image-container"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <motion.img
-                  src={cargaProyectoImg}
-                  alt="Carga Proyecto - Operación de carga pesada"
-                  whileHover={{
-                    scale: 1.1,
-                  }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                />
-              </motion.div>
+              <p className="service-extra-info">
+                {t("services.page.projectCargo.extraInfo")}
+              </p>
             </AnimatedElement>
           </div>
         </div>

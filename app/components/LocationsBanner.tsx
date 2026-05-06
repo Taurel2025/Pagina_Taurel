@@ -6,6 +6,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import taurelLogo from "../assets/logo.png";
 import mapVenezuela from "../assets/mappoints.png";
 import tuerca from "../assets/IMG_7051.png";
+
 const LocationsBanner: React.FC = () => {
   const { t } = useLanguage();
   const locations = [
@@ -13,12 +14,10 @@ const LocationsBanner: React.FC = () => {
     "La Guaira, Edo. Vargas.",
     "Catia La Mar, Vargas.",
     "Valencia, Edo. Carabobo.",
-    "El Guamache, Nueva Esparta.",
     "Maracaibo, Edo. Zulia.",
     "Barquisimeto, Edo. Lara.",
     "Pto. Cabello, Edo. Carabobo.",
     "San Antonio del Táchira, Edo. Táchira.",
-    "Santa Elena de Uairén, Bolívar.",
   ];
 
   const containerVariants = {
@@ -84,7 +83,6 @@ const LocationsBanner: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.div className="locations-header" variants={logoVariants}>
-
             <img src={taurelLogo} alt="Taurel" className="taurel-logo" />
             <motion.h2
               className="locations-tagline"
@@ -97,10 +95,9 @@ const LocationsBanner: React.FC = () => {
             </motion.h2>
           </motion.div>
 
-          {/* Lista de ubicaciones */}
           <motion.div className="locations-list" variants={containerVariants}>
             <div className="locations-column left">
-              {locations.slice(0, 5).map((location, index) => (
+              {locations.slice(0, 4).map((location, index) => (
                 <motion.div
                   key={index}
                   className="location-item"
@@ -117,9 +114,9 @@ const LocationsBanner: React.FC = () => {
               ))}
             </div>
             <div className="locations-column right">
-              {locations.slice(5).map((location, index) => (
+              {locations.slice(4).map((location, index) => (
                 <motion.div
-                  key={index + 5}
+                  key={index + 4}
                   className="location-item"
                   variants={itemVariants}
                   whileHover={{
@@ -136,7 +133,6 @@ const LocationsBanner: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Mapa de Venezuela con puntos */}
         <motion.div
           className="locations-map"
           variants={mapVariants}

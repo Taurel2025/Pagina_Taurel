@@ -137,7 +137,7 @@ const translations = {
         },
         service8: {
           title: 'Carga Proyecto',
-          description: 'Ofrecemos soluciones integrales para el movimiento de cargas sobredimensionadas y extrapesadas, garantizando el éxito de sus operaciones más complejas. Este servicio incluye:\n• Ejecución y control técnico de proyectos industriales.\n• Análisis riguroso de riesgos y estudios de ruta personalizados.\n• Servicio Multimodal Global adaptado a las dimensiones de su carga.'
+          description: 'Nos especializamos en el diseño de soluciones integrales para cargas sobredimensionadas y pesadas , desde la inspección en fabrica hasta el punto final. Planificación estratégica  para cargas sobredimensionadas y pesadas de los sectores Oil & Gas, Minería, Infraestructura y Energía'
         }
       },
       page: {
@@ -201,10 +201,11 @@ const translations = {
         },
         projectCargo: {
           title: 'Carga Proyecto',
-          description: 'Ofrecemos soluciones integrales para el movimiento de cargas sobredimensionadas y extrapesadas, garantizando el éxito de sus operaciones más complejas.',
-          list1: 'Ejecución y control técnico de proyectos industriales de principio a fin.',
-          list2: 'Análisis riguroso de riesgos y estudios de ruta personalizados para máxima seguridad.',
-          list3: 'Servicio Multimodal Global adaptado a las dimensiones de su carga.'
+          description: 'Nos especializamos en el diseño de soluciones integrales para cargas sobredimensionadas y pesadas , desde la inspección en fabrica hasta el punto final.',
+          list1: 'Planificación estratégica  para los sectores Oil & Gas, Minería, Infraestructura y Energía.',
+          list2: 'Diseñamos estudios de ruta,  factibilidad técnica y planes de izaje.',
+          list3: 'No solo movemos equipos; movilizamos el futuro de su industria.',
+          extraInfo: 'Trámite de permisos requeridos, por las autoridades aduaneras, para el ingreso o extracción de mercancías relacionadas con el territorio nacional.'
         }
       }
     },
@@ -299,6 +300,27 @@ const translations = {
           emailInvalid: 'Correo electrónico inválido',
           messageRequired: 'Mensaje es requerido'
         }
+      }
+    },
+    empleo: {
+      title: 'Únete a nuestro equipo',
+      subtitle: 'Conoce nuestras vacantes disponibles y postúlate',
+      noJobs: 'No hay vacantes disponibles en este momento.',
+      requirements: 'Requisitos',
+      requirementsTitle: 'Requisitos del cargo',
+      form: {
+        title: 'Postúlate ahora',
+        name: 'Nombre y Apellido',
+        phone: 'Teléfono',
+        email: 'Correo electrónico',
+        position: 'Cargo al que postula',
+        cv: 'Adjunta tu CV (PDF)',
+        send: 'Enviar solicitud',
+        sending: 'Enviando...',
+        success: '¡Solicitud enviada con éxito!',
+        error: 'Error al enviar la solicitud. Inténtalo de nuevo.',
+        location: 'Ubicación',
+        linkedin: 'LinkedIn (opcional)'
       }
     }
   },
@@ -450,10 +472,11 @@ const translations = {
         },
         projectCargo: {
           title: 'Project Cargo',
-          description: 'We offer comprehensive solutions for the movement of oversized and overweight cargo, ensuring the success of your most complex operations.',
-          list1: 'Technical execution and control of industrial projects from start to finish.',
-          list2: 'Rigorous risk analysis and customized route studies for maximum security.',
-          list3: 'Global Multimodal Service adapted to the dimensions of your cargo.'
+          description: 'We specialize in designing comprehensive solutions for oversized and heavy cargo, from factory inspection to final delivery.',
+          list1: 'Strategic planning for Oil & Gas, Mining, Infrastructure and Energy sectors.',
+          list2: 'We design route studies, technical feasibility and lifting plans.',
+          list3: 'We don\'t just move equipment; we mobilize the future of your industry.',
+          extraInfo: 'Processing of permits required by customs authorities for the entry or extraction of goods related to national territory.'
         }
       }
     },
@@ -548,6 +571,27 @@ const translations = {
           emailInvalid: 'Invalid email',
           messageRequired: 'Message is required'
         }
+      }
+    },
+    empleo: {
+      title: 'Join our team',
+      subtitle: 'Check our open positions and apply',
+      noJobs: 'No open positions at the moment.',
+      requirements: 'Requirements',
+      requirementsTitle: 'Job Requirements',
+      form: {
+        title: 'Apply now',
+        name: 'Full Name',
+        phone: 'Phone',
+        email: 'Email',
+        position: 'Position applied for',
+        cv: 'Attach your CV (PDF)',
+        send: 'Send Application',
+        sending: 'Sending...',
+        success: 'Application submitted successfully!',
+        error: 'Error sending application. Please try again.',
+        location: 'Location',
+        linkedin: 'LinkedIn (optional)'
       }
     }
   }

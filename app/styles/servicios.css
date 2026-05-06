@@ -1140,3 +1140,60 @@
     max-width: 350px;
   }
 }
+
+/* Hexágono decorativo a la izquierda para Carga Proyecto */
+.hexagonos-decorativos-left {
+  position: absolute;
+  left: -100px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: auto;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+/* Layout alternado para Carga Proyecto (imagen izquierda, texto derecha) */
+.project-cargo-reverse {
+  flex-direction: row-reverse;
+}
+
+.project-cargo-reverse .service-image-content {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.project-cargo-reverse .service-text-content {
+  padding-left: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hexagonos-decorativos-left {
+    left: -50px;
+    width: 200px;
+  }
+  
+  .project-cargo-reverse .service-text-content {
+    padding-left: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hexagonos-decorativos-left {
+    display: none;
+  }
+  
+  .project-cargo-reverse {
+    flex-direction: column;
+  }
+  
+  .project-cargo-reverse .service-text-content {
+    padding-left: 0;
+    margin-top: 2rem;
+  }
+  
+  .project-cargo-reverse .service-image-content {
+    justify-content: center;
+  }
+}
