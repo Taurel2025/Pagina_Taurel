@@ -308,6 +308,8 @@ const translations = {
       noJobs: 'No hay vacantes disponibles en este momento.',
       requirements: 'Requisitos',
       requirementsTitle: 'Requisitos del cargo',
+      loading: 'Cargando vacantes...',
+      errorLoading: 'Error al cargar las vacantes. Intenta de nuevo más tarde.',
       form: {
         title: 'Postúlate ahora',
         name: 'Nombre y Apellido',
@@ -321,6 +323,30 @@ const translations = {
         error: 'Error al enviar la solicitud. Inténtalo de nuevo.',
         location: 'Ubicación',
         linkedin: 'LinkedIn (opcional)'
+      },
+      admin: {
+        accessButton: 'Administración',
+        loginTitle: 'Acceso administrador',
+        password: 'Contraseña',
+        enter: 'Ingresar',
+        wrongPassword: 'Clave incorrecta',
+        addJobTitle: 'Agregar nuevo cargo',
+        jobTitlePlaceholder: 'Título del cargo',
+        jobDescriptionPlaceholder: 'Descripción',
+        jobRequirementsPlaceholder: 'Requisito (presiona Enter para agregar)',
+        addButton: 'Agregar cargo',
+        deleteButton: 'Eliminar',
+        customJobsTitle: 'Cargos personalizados',
+        viewApplications: 'Ver solicitudes recibidas',
+        hideApplications: 'Ocultar solicitudes',
+        applicationsTitle: 'Solicitudes de empleo recibidas',
+        noApplications: 'No hay solicitudes recibidas todavía.',
+        date: 'Fecha',
+        phone: 'Teléfono',
+        locationLabel: 'Ubicación',
+        cvFile: 'CV',
+        loadingApplications: 'Cargando solicitudes...',
+        errorApplications: 'Error al cargar las solicitudes.'
       }
     }
   },
@@ -579,6 +605,8 @@ const translations = {
       noJobs: 'No open positions at the moment.',
       requirements: 'Requirements',
       requirementsTitle: 'Job Requirements',
+      loading: 'Loading positions...',
+      errorLoading: 'Error loading positions. Please try again later.',
       form: {
         title: 'Apply now',
         name: 'Full Name',
@@ -592,6 +620,30 @@ const translations = {
         error: 'Error sending application. Please try again.',
         location: 'Location',
         linkedin: 'LinkedIn (optional)'
+      },
+      admin: {
+        accessButton: 'Administration',
+        loginTitle: 'Admin Access',
+        password: 'Password',
+        enter: 'Enter',
+        wrongPassword: 'Incorrect password',
+        addJobTitle: 'Add new job',
+        jobTitlePlaceholder: 'Job title',
+        jobDescriptionPlaceholder: 'Description',
+        jobRequirementsPlaceholder: 'Requirement (press Enter to add)',
+        addButton: 'Add job',
+        deleteButton: 'Delete',
+        customJobsTitle: 'Custom jobs',
+        viewApplications: 'View applications',
+        hideApplications: 'Hide applications',
+        applicationsTitle: 'Job applications received',
+        noApplications: 'No applications received yet.',
+        date: 'Date',
+        phone: 'Phone',
+        locationLabel: 'Location',
+        cvFile: 'CV',
+        loadingApplications: 'Loading applications...',
+        errorApplications: 'Error loading applications.'
       }
     }
   }
