@@ -51,7 +51,7 @@ export const useLanguage = () => {
   return context;
 };
 
-// Traducciones
+// Traducciones completas (incluye todo lo de la segunda versión + nuevas claves de la primera)
 const translations = {
   es: {
     nav: {
@@ -189,7 +189,7 @@ const translations = {
             list1: 'Agente general',
             list2: 'Agente portuario',
             list3: 'Agente protector',
-            list4: 'Operador de carga pesada y voluminosa,Coordinador de operaciones de carga y descarga.'
+            list4: 'Manejo de carga pesada y voluminosa, y coordinación de las operaciones de carga y descarga.'
           }
         },
         customs: {

@@ -35,44 +35,20 @@ export default function Servicios() {
         <h2>{t("services.page.title")}</h2>
       </div>
 
-      {/* SECCIÓN CARGA PROYECTO - PRIMERA EN EL ORDEN, FONDO AZUL CLARITO, HEXÁGONO A LA IZQUIERDA */}
-      <section 
-        className="advisory-section section project-cargo-section-alt" 
-        style={{ backgroundColor: '#f8faff' }}
-      >
+      {/* SECCIÓN CARGA PROYECTO - ESTRUCTURA IDÉNTICA A ASESORÍA TÉCNICA */}
+      <section className="advisory-section section">
         <motion.img
           src={heaxogono3}
           alt="Hexágonos decorativos"
-          className="hexagonos-decorativos-left"
-          whileHover={{
-            scale: 1.05,
-          }}
+          className="hexagonos-decorativos"
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         />
         <div className="container">
-          <div className="service-content-wrapper project-cargo-reverse">
+          <div className="service-content-wrapper">
+            {/* TEXTO A LA IZQUIERDA */}
             <AnimatedElement
               animation="fadeLeft"
-              className="service-image-content"
-            >
-              <motion.div
-                className="hexagon-image-container"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <motion.img
-                  src={cargaProyectoImg}
-                  alt="Carga Proyecto - Operación de carga pesada"
-                  whileHover={{
-                    scale: 1.1,
-                  }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                />
-              </motion.div>
-            </AnimatedElement>
-
-            <AnimatedElement
-              animation="fadeRight"
               className="service-text-content"
             >
               <div className="service-icon-title">
@@ -95,18 +71,37 @@ export default function Servicios() {
                 {t("services.page.projectCargo.extraInfo")}
               </p>
             </AnimatedElement>
+
+            {/* IMAGEN A LA DERECHA */}
+            <AnimatedElement
+              animation="fadeRight"
+              className="service-image-content"
+            >
+              <motion.div
+                className="hexagon-image-container"
+                style={{ marginLeft: '-40px' }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <motion.img
+                  src={cargaProyectoImg}
+                  alt="Carga Proyecto - Operación de carga pesada"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </motion.div>
+            </AnimatedElement>
           </div>
         </div>
       </section>
 
+      {/* ASESORÍA TÉCNICA */}
       <section className="advisory-section section">
         <motion.img
           src={heaxogono3}
           alt="Hexágonos decorativos"
           className="hexagonos-decorativos"
-          whileHover={{
-            scale: 1.05,
-          }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         />
         <div className="container">
@@ -148,9 +143,7 @@ export default function Servicios() {
                 <motion.img
                   src={servicioImg}
                   alt="Asesoría técnica - Reunión de negocios"
-                  whileHover={{
-                    scale: 1.1,
-                  }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 />
               </motion.div>
@@ -159,6 +152,7 @@ export default function Servicios() {
         </div>
       </section>
 
+      {/* TRANSPORTE DE CARGA INTERNACIONAL */}
       <section className="international-transport-section section">
         <div className="container">
           <div className="service-content-wrapper reverse">
@@ -216,9 +210,7 @@ export default function Servicios() {
                 <motion.img
                   src={servicioImg2}
                   alt="Transporte de carga internacional"
-                  whileHover={{
-                    scale: 1.1,
-                  }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 />
               </motion.div>
@@ -227,6 +219,7 @@ export default function Servicios() {
         </div>
       </section>
 
+      {/* ALMACENAMIENTO Y SERVICIOS NAVIEROS */}
       <section className="storage-maritime-section section">
         <div className="bg-asolute-heaxogono14">
           <motion.img src={hexagono14} alt="Mapa mundial" />
@@ -252,11 +245,9 @@ export default function Servicios() {
                   />
                   <h2>{t("services.page.storage.title")}</h2>
                 </div>
-
                 <p className="service-description">
                   {t("services.page.storage.description")}
                 </p>
-
               </AnimatedElement>
               <AnimatedElement
                 animation="fadeLeft"
@@ -269,10 +260,8 @@ export default function Servicios() {
                 >
                   <motion.img
                     src={servicioImg3}
-                    alt="Transporte de carga internacional"
-                    whileHover={{
-                      scale: 1.1,
-                    }}
+                    alt="Almacenamiento"
+                    whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   />
                 </motion.div>
@@ -292,11 +281,9 @@ export default function Servicios() {
                 />
                 <h2>{t("services.page.internationals.title")}</h2>
               </div>
-
               <p className="service-description">
                 {t("services.page.internationals.description")}
               </p>
-
               <ul className="service-list">
                 <li>{t("services.page.internationals.list1")}</li>
                 <li>{t("services.page.internationals.list2")}</li>
@@ -304,6 +291,7 @@ export default function Servicios() {
                 <li>{t("services.page.internationals.list4")}</li>
               </ul>
             </AnimatedElement>
+
             <AnimatedElement
               animation="fadeUp"
               delay={0.2}
@@ -317,11 +305,9 @@ export default function Servicios() {
                 />
                 <h2>{t("services.page.maritime.title")}</h2>
               </div>
-
               <p className="service-description">
                 {t("services.page.maritime.description")}
               </p>
-
               <div className="maritime-services-grid">
                 <div className="maritime-service-column">
                   <h4>{t("services.page.maritime.containers.title")}</h4>
@@ -332,7 +318,6 @@ export default function Servicios() {
                     <li>{t("services.page.maritime.containers.list4")}</li>
                   </ul>
                 </div>
-
                 <div className="maritime-service-column">
                   <h4>{t("services.page.maritime.actingAs.title")}</h4>
                   <ul className="service-sublist">
@@ -348,15 +333,13 @@ export default function Servicios() {
         </div>
       </section>
 
+      {/* AGENCIAMIENTO ADUANAL */}
       <section className="customs-agency-section section">
         <motion.img
           src={hexagonoBgRight}
           alt=""
           className="hexagono-bg right"
-          whileHover={{
-            scale: 1.1,
-            rotate: -5,
-          }}
+          whileHover={{ scale: 1.1, rotate: -5 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         />
         <div>
@@ -372,10 +355,8 @@ export default function Servicios() {
               >
                 <motion.img
                   src={servicioImg4}
-                  alt="Agenciamiento Aduana - Puerto y contenedores"
-                  whileHover={{
-                    scale: 1.1,
-                  }}
+                  alt="Agenciamiento Aduana"
+                  whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 />
               </motion.div>
@@ -400,6 +381,7 @@ export default function Servicios() {
         </div>
       </section>
 
+      {/* CADENA LOGÍSTICA */}
       <section className="logistics-chain-flow section">
         <div>
           <AnimatedElement animation="fadeUp">
