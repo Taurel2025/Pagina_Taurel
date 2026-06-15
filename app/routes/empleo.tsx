@@ -87,7 +87,6 @@ export default function Empleo() {
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [errorJobs, setErrorJobs] = useState(false);
 
-  // Cargar cargos desde la API
   const fetchJobs = async () => {
     setLoadingJobs(true);
     setErrorJobs(false);
@@ -143,7 +142,6 @@ export default function Empleo() {
     localStorage.setItem("taurel_custom_jobs", JSON.stringify(customJobs));
   }, [customJobs]);
 
-  // Combinar empleos de la API + personalizados
   const allJobs: Job[] =
     apiJobs.length > 0
       ? [...apiJobs, ...customJobs]
@@ -153,7 +151,7 @@ export default function Empleo() {
           ? []
           : [...fallbackJobs, ...customJobs];
 
-  // ---------- Postulaciones (localStorage + API) ----------
+  // ---------- Postulaciones (localStorage) ----------
   const [applications, setApplications] = useState<Application[]>(() => {
     try {
       const saved = localStorage.getItem("taurel_applications");
@@ -186,14 +184,13 @@ export default function Empleo() {
   // ---------- Modal de requisitos ----------
   const [requirementsModal, setRequirementsModal] = useState<Job | null>(null);
 
-  // ---------- Panel de administración ----------
+  // ---------- Administración (oculta visualmente) ----------
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
   const [adminAuthenticated, setAdminAuthenticated] = useState(false);
   const [adminError, setAdminError] = useState(false);
   const [showApplications, setShowApplications] = useState(false);
 
-  // ---------- Agregar cargo (admin) ----------
   const [newJob, setNewJob] = useState({
     title: "",
     description: "",
@@ -218,7 +215,7 @@ export default function Empleo() {
     return () => clearInterval(interval);
   }, [totalSlides]);
 
-  // ---------- Validación del formulario ----------
+  // ---------- Validación ----------
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
     if (!formData.nombre.trim()) newErrors.nombre = "Requerido";
@@ -241,7 +238,6 @@ export default function Empleo() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // NUEVO: Convertir el archivo PDF a base64
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (!file) {
@@ -249,10 +245,8 @@ export default function Empleo() {
       return;
     }
 
-    // Guardamos el archivo para mostrar su nombre
     setFormData((prev) => ({ ...prev, cvFile: file }));
 
-    // Convertir a base64
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -261,7 +255,6 @@ export default function Empleo() {
     };
   };
 
-  // ---------- Envío del formulario a la API ----------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -282,7 +275,7 @@ export default function Empleo() {
         telefono: formData.telefono,
         ubicacion: formData.ubicacion,
         linkedin: formData.linkedin,
-        resumenCurricular: formData.cvBase64 || "", // Enviar base64 (o cadena vacía)
+        resumenCurricular: formData.cvBase64 || "",
         cargo_id: cargo_id
       };
 
@@ -296,7 +289,6 @@ export default function Empleo() {
         throw new Error("Error al enviar la postulación a la API");
       }
 
-      // Guardar en localStorage para el panel admin
       const newApp: Application = {
         id: Date.now(),
         nombre: formData.nombre,
@@ -333,7 +325,7 @@ export default function Empleo() {
   const openRequirements = (job: Job) => setRequirementsModal(job);
   const closeRequirements = () => setRequirementsModal(null);
 
-  // ---------- Administración ----------
+  // Funciones de administración (no se usan porque la UI está oculta)
   const handleAdminLogin = () => {
     if (adminPassword === ADMIN_PASSWORD) {
       setAdminAuthenticated(true);
@@ -586,7 +578,6 @@ export default function Empleo() {
                   </div>
                 </div>
 
-                {/* Campo de CV con conversión a base64 */}
                 <div className="form-group file-upload">
                   <label htmlFor="cv-upload" className={formData.cvFile ? "file-selected" : ""}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -602,7 +593,6 @@ export default function Empleo() {
                     accept=".pdf"
                     onChange={handleFileChange}
                     onClick={(e) => {
-                      // Permite volver a seleccionar el mismo archivo
                       (e.target as HTMLInputElement).value = "";
                     }}
                   />
@@ -644,7 +634,12 @@ export default function Empleo() {
         )}
       </AnimatePresence>
 
-      {/* ======= Panel de Administración ======= */}
+      {/* ================================
+           SECCIÓN DE ADMINISTRACIÓN OCULTA
+           Se ha comentado para que no sea visible.
+           Para reactivarla, descomentar el bloque.
+      ================================ */}
+      {/*
       <section className="empleo-admin section">
         <div className="container">
           {!adminAuthenticated ? (
@@ -815,6 +810,7 @@ export default function Empleo() {
           )}
         </div>
       </section>
+      */}
     </div>
   );
 }
