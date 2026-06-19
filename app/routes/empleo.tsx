@@ -27,6 +27,7 @@ interface Application {
 // ---------- Constantes ----------
 const API_BASE_URL = "https://logistics.taurel.com/api";
 const ADMIN_PASSWORD = "TaurelAdmin2025";
+const MAX_CV_SIZE_MB = 1; // tamaño máximo en MB
 
 // Cargos iniciales de respaldo (mientras se carga la API)
 const fallbackJobs: Job[] = [
@@ -245,6 +246,15 @@ export default function Empleo() {
       return;
     }
 
+    // Validar tamaño del archivo
+    const maxSizeBytes = MAX_CV_SIZE_MB * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      alert(`El archivo es demasiado grande. El tamaño máximo permitido es de ${MAX_CV_SIZE_MB} MB.`);
+      // Limpiar el input para que el usuario pueda volver a seleccionar
+      e.target.value = "";
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, cvFile: file }));
 
     const reader = new FileReader();
@@ -252,6 +262,10 @@ export default function Empleo() {
     reader.onloadend = () => {
       const base64String = reader.result as string;
       setFormData((prev) => ({ ...prev, cvBase64: base64String }));
+    };
+    reader.onerror = () => {
+      alert("Error al leer el archivo. Por favor, intenta con otro archivo.");
+      setFormData((prev) => ({ ...prev, cvFile: null, cvBase64: "" }));
     };
   };
 
@@ -279,14 +293,23 @@ export default function Empleo() {
         cargo_id: cargo_id
       };
 
-      const response = await fetch(`${API_BASE_URL}/update_postulacion`, {
+       const response: any = await fetch(`${API_BASE_URL}/update_postulacion`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
-        throw new Error("Error al enviar la postulación a la API");
+        // Si el error es 413, mostramos mensaje específico
+        if (response.status === 413) {
+          throw new Error("El archivo del currículum es demasiado grande para el servidor. Por favor, sube un archivo más pequeño (máximo 1 MB) o contacta con soporte.");
+        }
+        
+		if(response.cdError > 0) {
+			throw new Error(response.deError || "Error al enviar la postulación a la API");
+		}
+		
+		throw new Error("Error al enviar la postulación a la API");
       }
 
       const newApp: Application = {
@@ -314,9 +337,14 @@ export default function Empleo() {
         cvFile: null,
         cvBase64: ""
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error al enviar formulario:", error);
-      alert(t("empleo.form.error"));
+      // Si el error tiene un mensaje, lo mostramos
+      if (error.message) {
+        alert(error.message);
+      } else {
+        alert(t("empleo.form.error"));
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -596,6 +624,9 @@ export default function Empleo() {
                       (e.target as HTMLInputElement).value = "";
                     }}
                   />
+                  <small style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', marginTop: '4px', display: 'block' }}>
+                    Tamaño máximo: {MAX_CV_SIZE_MB} MB
+                  </small>
                 </div>
 
                 <button type="submit" className="btn-submit" disabled={isSubmitting}>
@@ -636,179 +667,10 @@ export default function Empleo() {
 
       {/* ================================
            SECCIÓN DE ADMINISTRACIÓN OCULTA
-           Se ha comentado para que no sea visible.
-           Para reactivarla, descomentar el bloque.
       ================================ */}
       {/*
       <section className="empleo-admin section">
-        <div className="container">
-          {!adminAuthenticated ? (
-            <>
-              <button
-                className="admin-access-btn"
-                onClick={() => setShowAdminLogin(true)}
-              >
-                🔐 {t("empleo.admin.accessButton")}
-              </button>
-              <AnimatePresence>
-                {showAdminLogin && (
-                  <motion.div
-                    className="admin-login-card"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                  >
-                    <h3>{t("empleo.admin.loginTitle")}</h3>
-                    <input
-                      type="password"
-                      placeholder={t("empleo.admin.password")}
-                      value={adminPassword}
-                      onChange={(e) => {
-                        setAdminPassword(e.target.value);
-                        setAdminError(false);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") handleAdminLogin();
-                      }}
-                    />
-                    <button onClick={handleAdminLogin}>
-                      {t("empleo.admin.enter")}
-                    </button>
-                    {adminError && (
-                      <p className="admin-error">{t("empleo.admin.wrongPassword")}</p>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </>
-          ) : (
-            <motion.div
-              className="admin-panel"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="admin-header">
-                <h3>{t("empleo.admin.addJobTitle")}</h3>
-                <button onClick={handleLogout} className="admin-logout-btn">
-                  ✕ Cerrar sesión
-                </button>
-              </div>
-              <div className="admin-form">
-                <input
-                  type="text"
-                  placeholder={t("empleo.admin.jobTitlePlaceholder")}
-                  value={newJob.title}
-                  onChange={(e) => setNewJob((prev) => ({ ...prev, title: e.target.value }))}
-                />
-                <input
-                  type="text"
-                  placeholder={t("empleo.admin.jobDescriptionPlaceholder")}
-                  value={newJob.description}
-                  onChange={(e) => setNewJob((prev) => ({ ...prev, description: e.target.value }))}
-                />
-                <div className="admin-requirements-input">
-                  <input
-                    type="text"
-                    placeholder={t("empleo.admin.jobRequirementsPlaceholder")}
-                    value={currentRequirement}
-                    onChange={(e) => setCurrentRequirement(e.target.value)}
-                    onKeyDown={handleAddRequirement}
-                  />
-                  <div className="admin-requirements-tags">
-                    {newJob.requirements.map((req, idx) => (
-                      <span key={idx} className="req-tag">
-                        {req}
-                        <button type="button" onClick={() => removeRequirement(idx)}>
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <button onClick={handleAddJob} className="btn-add-job">
-                  {t("empleo.admin.addButton")}
-                </button>
-              </div>
-
-              {customJobs.length > 0 && (
-                <div className="custom-jobs-list">
-                  <h4>{t("empleo.admin.customJobsTitle")}</h4>
-                  {customJobs.map((job) => (
-                    <div key={job.id} className="custom-job-item">
-                      <div>
-                        <strong>{job.title}</strong> – {job.description}
-                        <ul>
-                          {job.requirements.map((r, i) => (
-                            <li key={i}>{r}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <button className="btn-delete-job" onClick={() => handleDeleteJob(job.id)}>
-                        {t("empleo.admin.deleteButton")}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div style={{ marginTop: "30px", textAlign: "center" }}>
-                <button
-                  className="btn-view-applications"
-                  onClick={() => setShowApplications(!showApplications)}
-                >
-                  {showApplications
-                    ? t("empleo.admin.hideApplications")
-                    : t("empleo.admin.viewApplications")}
-                </button>
-              </div>
-
-              <AnimatePresence>
-                {showApplications && (
-                  <motion.div
-                    className="applications-section"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                  >
-                    <h4>{t("empleo.admin.applicationsTitle")}</h4>
-                    {applications.length === 0 ? (
-                      <p className="no-applications">{t("empleo.admin.noApplications")}</p>
-                    ) : (
-                      <div className="applications-table-wrapper">
-                        <table className="applications-table">
-                          <thead>
-                            <tr>
-                              <th>{t("empleo.form.name")}</th>
-                              <th>{t("empleo.form.email")}</th>
-                              <th>{t("empleo.admin.phone")}</th>
-                              <th>{t("empleo.form.position")}</th>
-                              <th>{t("empleo.admin.locationLabel")}</th>
-                              <th>{t("empleo.admin.date")}</th>
-                              <th>{t("empleo.admin.cvFile")}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {applications.map((app) => (
-                              <tr key={app.id}>
-                                <td>{app.nombre}</td>
-                                <td>{app.email}</td>
-                                <td>{app.telefono}</td>
-                                <td>{app.cargo}</td>
-                                <td>{app.ubicacion}</td>
-                                <td>{app.fecha}</td>
-                                <td className="cv-cell">{app.cvFileName}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </div>
+        ...
       </section>
       */}
     </div>

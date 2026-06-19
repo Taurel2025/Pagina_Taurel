@@ -12,8 +12,9 @@ const Navigation: React.FC = () => {
   const [token, setToken] = useState('');
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [appsDropdownOpen, setAppsDropdownOpen] = useState(false);
+  const [appsDropdownMobileOpen, setAppsDropdownMobileOpen] = useState(false);
 
-  // Función de autenticación y carga de shipments
   const initializeTracking = async () => {
     if (token && allShipments.length > 0) return;
 
@@ -30,18 +31,17 @@ const Navigation: React.FC = () => {
       if (res.ok && data.data?.token) {
         const accessToken = data.data.token;
         setToken(accessToken);
-        
-        // Cargar shipments
+
         const shipmentsRes = await fetch('https://taurel.cargologik.app/api/v2/shipments', {
           method: "POST",
-          headers: { 
-            "Authorization": `Bearer ${accessToken}`, 
-            "Content-Type": "application/json" 
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             limit: 300,
             page: 1,
-            filter: {}, 
+            filter: {},
             fields: [
               "shipmentId", "mbl", "hbl", "referenceName", "currentStatus",
               "etd", "eta", "carrier", "lastKnownLocation", "containersNumber",
@@ -64,8 +64,9 @@ const Navigation: React.FC = () => {
   const openTrackingModal = () => {
     setTrackingModalOpen(true);
     initializeTracking();
-    // Cerrar el menú móvil si está abierto
     setIsMenuOpen(false);
+    setAppsDropdownOpen(false);
+    setAppsDropdownMobileOpen(false);
     setTimeout(() => {
       const searchInput = document.getElementById('tracking-search-input') as HTMLInputElement;
       if (searchInput) searchInput.focus();
@@ -88,7 +89,7 @@ const Navigation: React.FC = () => {
       alert("Por favor escribe una referencia.");
       return;
     }
-    
+
     if (!allShipments.length) {
       setTrackingResult({ error: "⏳ Aún cargando datos..." });
       return;
@@ -107,8 +108,7 @@ const Navigation: React.FC = () => {
     }
 
     setTrackingResult({ data: found });
-    
-    // Importante: Esperar a que el DOM se actualice antes de dibujar el mapa
+
     setTimeout(() => {
       drawMap(found);
     }, 100);
@@ -123,23 +123,22 @@ const Navigation: React.FC = () => {
 
     let points: any[] = [];
 
-    // Recopilar puntos válidos
     if (shipment.origin && shipment.origin.lat && shipment.origin.lng) {
       points.push({ lat: parseFloat(shipment.origin.lat), lng: parseFloat(shipment.origin.lng), title: "Origen" });
-    } 
+    }
 
     if (shipment.events && shipment.events.length > 0) {
       shipment.events.forEach((e: any) => {
         if (e.location && e.location.lat && e.location.lng) {
-          points.push({ 
-            lat: parseFloat(e.location.lat), 
-            lng: parseFloat(e.location.lng), 
+          points.push({
+            lat: parseFloat(e.location.lat),
+            lng: parseFloat(e.location.lng),
             title: e.location.name || e.title || "Evento"
           });
         } else if (e.coordinates && e.coordinates.lat && e.coordinates.lon) {
-          points.push({ 
-            lat: parseFloat(e.coordinates.lat), 
-            lng: parseFloat(e.coordinates.lon), 
+          points.push({
+            lat: parseFloat(e.coordinates.lat),
+            lng: parseFloat(e.coordinates.lon),
             title: e.description || "Evento"
           });
         }
@@ -155,27 +154,23 @@ const Navigation: React.FC = () => {
       return;
     }
 
-    // Mostrar contenedor del mapa
     const mapContainer = document.getElementById('tracking-map-container');
     if (mapContainer) {
       mapContainer.style.display = 'block';
     }
 
-    // Limpiar instancia previa
     if (mapInstance) {
       mapInstance.remove();
       setMapInstance(null);
     }
 
-    // Esperar a que el contenedor sea visible
     setTimeout(() => {
       const L = (window as any).L;
       if (!L) {
         console.error('Leaflet no está cargado');
         return;
       }
-      
-      // Inicializar mapa
+
       const newMapInstance = L.map('tracking-map').setView([points[0].lat, points[0].lng], 3);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -184,7 +179,6 @@ const Navigation: React.FC = () => {
 
       const latLngs = points.map((p: any) => [p.lat, p.lng]);
 
-      // Agregar marcadores
       points.forEach((p: any, index: number) => {
         let colorIcon;
         if (index === 0) {
@@ -212,7 +206,6 @@ const Navigation: React.FC = () => {
           .bindPopup(`<b>${p.title}</b>`);
       });
 
-      // Dibujar línea conectora
       if (latLngs.length > 1) {
         const polyline = L.polyline(latLngs, {
           color: '#00529b',
@@ -220,7 +213,7 @@ const Navigation: React.FC = () => {
           opacity: 0.7,
           dashArray: '5, 10'
         }).addTo(newMapInstance);
-        
+
         newMapInstance.fitBounds(polyline.getBounds(), { padding: [20, 20] });
       }
 
@@ -231,25 +224,20 @@ const Navigation: React.FC = () => {
     }, 300);
   };
 
-  // Cargar Leaflet
   useEffect(() => {
-    // Cargar Leaflet CSS
     const leafletCss = document.createElement('link');
     leafletCss.rel = 'stylesheet';
     leafletCss.href = 'https://unpkg.com/leaflet/dist/leaflet.css';
     document.head.appendChild(leafletCss);
 
-    // Cargar Leaflet JS
     const leafletScript = document.createElement('script');
     leafletScript.src = 'https://unpkg.com/leaflet/dist/leaflet.js';
     document.head.appendChild(leafletScript);
 
     return () => {
-      // Cleanup
       if (mapInstance) {
         mapInstance.remove();
       }
-      // Remover elementos añadidos al head
       if (leafletCss.parentNode) {
         document.head.removeChild(leafletCss);
       }
@@ -265,13 +253,11 @@ const Navigation: React.FC = () => {
         <div className="nav-container">
           <div className="logo-container">
             <a href="/">
-              {/* LOGO ACTUALIZADO con enlace de Imgur */}
-              <img 
-                src="https://i.imgur.com/OCJNAWD.png" 
-                alt="Taurel" 
+              <img
+                src="https://i.imgur.com/OCJNAWD.png"
+                alt="Taurel"
                 className="logo"
                 onError={(e) => {
-                  // Fallback si la imagen no carga
                   e.currentTarget.src = 'https://via.placeholder.com/150x50/00529b/FFFFFF?text=TAUREL';
                   e.currentTarget.alt = 'Logo Taurel (fallback)';
                 }}
@@ -285,50 +271,72 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
-              <li><a href="/empleo">{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace a Empleo */}
+              <li className="nav-item-dropdown">
+                <button
+                  className="dropdown-trigger"
+                  onClick={() => setAppsDropdownOpen(!appsDropdownOpen)}
+                  onBlur={() => setTimeout(() => setAppsDropdownOpen(false), 200)}
+                >
+                  <span className="dropdown-trigger-text">
+                    {t('nav.applications')}
+                    <svg
+                      className={`dropdown-arrow ${appsDropdownOpen ? 'open' : ''}`}
+                      width="12"
+                      height="8"
+                      viewBox="0 0 12 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </button>
+                <div className={`dropdown-menu-apps ${appsDropdownOpen ? 'open' : ''}`}>
+                  <div className="dropdown-menu-apps-inner">
+                    <button onClick={openTrackingModal} className="dropdown-app-item">
+                      <span className="dropdown-app-icon">📍</span>
+                      <span className="dropdown-app-text">{t('nav.trackShipment')}</span>
+                    </button>
+                    <div className="dropdown-app-divider"></div>
+                    <a
+                      href="https://logistics.taurel.com/#/login"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="dropdown-app-item"
+                    >
+                      <span className="dropdown-app-icon">🚢</span>
+                      <span className="dropdown-app-text">Taurel Logistics</span>
+                    </a>
+                    <div className="dropdown-app-divider"></div>
+                    <button className="dropdown-app-item" onClick={() => {}}>
+                      <span className="dropdown-app-icon">🧮</span>
+                      <span className="dropdown-app-text">{t('nav.calculator')}</span>
+                    </button>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
 
           <div className="special-links">
-            {/* Grupo de botones con divisor */}
-            <div className="button-group">
-              {/* BOTÓN CON TRADUCCIÓN */}
-              <button onClick={openTrackingModal} className="tracking-button">
-                📍 {t('nav.trackShipment')}
-              </button>
-              <div className="button-divider"></div>
-              <a 
-                href="https://logistics.taurel.com/#/login" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="tracking-button logistics-button"
-              >
-                🚢 Taurel Logistics
-              </a>
-            </div>
-            
             <div className="header-lang-compact">
-              {/* Bandera - Puedes cambiar esto a Imgur si quieres */}
-              <img 
-                src="/app/assets/bandera.png" 
-                alt="Venezuela" 
+              <img
+                src="/app/assets/bandera.png"
+                alt="Venezuela"
                 className="flag-ven-small"
-                onError={(e) => {
-                  // Fallback para bandera
-                  e.currentTarget.style.display = 'none';
-                }}
+                onError={(e) => e.currentTarget.style.display = 'none'}
               />
-              <a 
-                href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setLanguage('es'); }}
                 className={language === 'es' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ESP
               </a>
               <span className="lang-sep">|</span>
-              <a 
-                href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setLanguage('en'); }}
                 className={language === 'en' ? 'lang-header-active' : 'lang-header-inactive'}
               >
                 ENG
@@ -341,56 +349,71 @@ const Navigation: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
           <ul>
             <li><a href="/" onClick={() => setIsMenuOpen(false)}>{t('nav.home')}</a></li>
             <li><a href="/servicios" onClick={() => setIsMenuOpen(false)}>{t('nav.services')}</a></li>
             <li><a href="/sobre-nosotros" onClick={() => setIsMenuOpen(false)}>{t('nav.aboutUs')}</a></li>
             <li><a href="/contactanos" onClick={() => setIsMenuOpen(false)}>{t('nav.contact')}</a></li>
-            <li><a href="/empleo" onClick={() => setIsMenuOpen(false)}>{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace móvil a Empleo */}
-            <li>
-              <div className="button-group mobile-button-group">
-                {/* BOTÓN MÓVIL CON TRADUCCIÓN */}
-                <button onClick={openTrackingModal} className="tracking-button">
-                  📍 {t('nav.trackShipment')}
-                </button>
-                <div className="button-divider mobile-divider"></div>
-                <a 
-                  href="https://logistics.taurel.com/#/login" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="tracking-button logistics-button"
+            <li className="mobile-dropdown-item">
+              <button
+                className="mobile-dropdown-trigger"
+                onClick={() => setAppsDropdownMobileOpen(!appsDropdownMobileOpen)}
+              >
+                <span>{t('nav.applications')}</span>
+                <svg
+                  className={`mobile-dropdown-arrow ${appsDropdownMobileOpen ? 'open' : ''}`}
+                  width="14"
+                  height="9"
+                  viewBox="0 0 12 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  🚢 Taurel Logistics
+                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <div className={`mobile-dropdown-content ${appsDropdownMobileOpen ? 'open' : ''}`}>
+                <button onClick={() => { openTrackingModal(); }} className="mobile-dropdown-app-item">
+                  <span className="mobile-dropdown-app-icon">📍</span>
+                  <span>{t('nav.trackShipment')}</span>
+                </button>
+                <a
+                  href="https://logistics.taurel.com/#/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-dropdown-app-item"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span className="mobile-dropdown-app-icon">🚢</span>
+                  <span>Taurel Logistics</span>
                 </a>
+                <button className="mobile-dropdown-app-item" onClick={() => {}}>
+                  <span className="mobile-dropdown-app-icon">🧮</span>
+                  <span>{t('nav.calculator')}</span>
+                </button>
               </div>
             </li>
           </ul>
-          
+
           <div className="mobile-lang">
             <div className="mobile-lang-content">
-              {/* Bandera en versión móvil */}
-              <img 
-                src="/app/assets/bandera.png" 
-                alt="Venezuela" 
+              <img
+                src="/app/assets/bandera.png"
+                alt="Venezuela"
                 className="flag-ven"
-                onError={(e) => {
-                  // Fallback para bandera
-                  e.currentTarget.style.display = 'none';
-                }}
+                onError={(e) => e.currentTarget.style.display = 'none'}
               />
-              <a 
-                href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('es');}}
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setLanguage('es'); }}
                 className={language === 'es' ? 'lang-active' : ''}
               >
                 ESP
               </a>
               <span className="sep">|</span>
-              <a 
-                href="#" 
-                onClick={(e) => {e.preventDefault(); setLanguage('en');}}
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setLanguage('en'); }}
                 className={language === 'en' ? 'lang-active' : ''}
               >
                 ENG
@@ -400,20 +423,18 @@ const Navigation: React.FC = () => {
         </div>
       </nav>
 
-      {/* Modal de Tracking */}
       {trackingModalOpen && (
         <div className="tracking-modal-overlay" style={{display: 'flex'}} onClick={closeTrackingModal}>
           <div className="tracking-modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="tracking-modal-header">
-              {/* TÍTULO DEL MODAL CON TRADUCCIÓN */}
               <h2>{t('nav.trackShipment')}</h2>
               <span className="tracking-close-btn" onClick={closeTrackingModal}>&times;</span>
             </div>
 
             <div className="tracking-modal-body">
               <div className="tracking-search-bar">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   id="tracking-search-input"
                   placeholder="Ingrese MBL, HBL o Referencia..."
                   value={searchQuery}
@@ -437,25 +458,13 @@ const Navigation: React.FC = () => {
                             {language === 'es' ? '📦 Información General' : '📦 General Information'}
                           </div>
                           <div className="tracking-info-grid">
+                            <div className="tracking-info-item"><strong>Shipment ID</strong> {trackingResult.data.shipmentId || "N/A"}</div>
+                            <div className="tracking-info-item"><strong>MBL</strong> {trackingResult.data.mbl || "N/A"}</div>
+                            <div className="tracking-info-item"><strong>HBL</strong> {trackingResult.data.hbl || "N/A"}</div>
+                            <div className="tracking-info-item"><strong>{language === 'es' ? 'Referencia' : 'Reference'}</strong> {trackingResult.data.referenceName || "N/A"}</div>
+                            <div className="tracking-info-item"><strong>{language === 'es' ? 'Transportista' : 'Carrier'}</strong> {trackingResult.data.carrier?.name || "N/A"}</div>
                             <div className="tracking-info-item">
-                              <strong>Shipment ID</strong> {trackingResult.data.shipmentId || "N/A"}
-                            </div>
-                            <div className="tracking-info-item">
-                              <strong>MBL</strong> {trackingResult.data.mbl || "N/A"}
-                            </div>
-                            <div className="tracking-info-item">
-                              <strong>HBL</strong> {trackingResult.data.hbl || "N/A"}
-                            </div>
-                            <div className="tracking-info-item">
-                              <strong>{language === 'es' ? 'Referencia' : 'Reference'}</strong> 
-                              {trackingResult.data.referenceName || "N/A"}
-                            </div>
-                            <div className="tracking-info-item">
-                              <strong>{language === 'es' ? 'Transportista' : 'Carrier'}</strong> 
-                              {trackingResult.data.carrier?.name || "N/A"}
-                            </div>
-                            <div className="tracking-info-item">
-                              <strong>{language === 'es' ? 'Estado' : 'Status'}</strong> 
+                              <strong>{language === 'es' ? 'Estado' : 'Status'}</strong>
                               <span className={`tracking-status-badge ${(trackingResult.data.currentStatus || "").includes("Delay") ? "tracking-status-delay" : "tracking-status-ok"}`}>
                                 {trackingResult.data.currentStatus || "N/A"}
                               </span>
@@ -470,7 +479,7 @@ const Navigation: React.FC = () => {
                           {(trackingResult.data.events || []).length > 0 ? (
                             trackingResult.data.events.slice(-3).reverse().map((e: any, index: number) => (
                               <div key={index}>
-                                • <strong>{new Date(e.date).toLocaleDateString(language === 'es' ? "es-ES" : "en-US")}</strong>: 
+                                • <strong>{new Date(e.date).toLocaleDateString(language === 'es' ? "es-ES" : "en-US")}</strong>:
                                 {e.title || e.description}
                               </div>
                             ))
@@ -481,11 +490,11 @@ const Navigation: React.FC = () => {
 
                         <div id="tracking-map-container" style={{display: 'none'}}>
                           <div style={{
-                            background: '#f1f1f1', 
-                            color: '#333', 
-                            padding: '12px 15px', 
-                            fontSize: '0.9rem', 
-                            fontWeight: '700', 
+                            background: '#f1f1f1',
+                            color: '#333',
+                            padding: '12px 15px',
+                            fontSize: '0.9rem',
+                            fontWeight: '700',
                             borderBottom: '1px solid #ddd'
                           }}>
                             {language === 'es' ? '🗺️ Ruta del Envío' : '🗺️ Shipment Route'}

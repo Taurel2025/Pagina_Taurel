@@ -51,7 +51,6 @@ export const useLanguage = () => {
   return context;
 };
 
-// Traducciones completas (incluye todo lo de la segunda versión + nuevas claves de la primera)
 const translations = {
   es: {
     nav: {
@@ -61,7 +60,9 @@ const translations = {
       contact: 'Contáctenos',
       trackShipment: 'Rastree su embarque',
       logisticsPortal: 'Taurel Logistics',
-      jobs: 'Empleo'
+      jobs: 'Empleo',
+      applications: 'Aplicaciones',
+      calculator: 'Calculadora' // <-- NUEVA CLAVE
     },
     footer: {
       tagline: 'Impulsamos su negocio de principio a fin.',
@@ -358,7 +359,9 @@ const translations = {
       contact: 'Contact Us',
       trackShipment: 'Track your shipment',
       logisticsPortal: 'Taurel Logistics',
-      jobs: 'Jobs'
+      jobs: 'Jobs',
+      applications: 'Applications',
+      calculator: 'Calculator' // <-- NUEVA CLAVE
     },
     footer: {
       tagline: 'We drive your business from start to finish.',
