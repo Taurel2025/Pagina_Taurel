@@ -118,6 +118,7 @@ export default function CalculadoraEnvio() {
               onChange={handleChange}
               min="0" 
               placeholder="Ej. 1800"
+              readOnly={true}  // Hacemos que este campo sea de solo lectura ya que se obtiene de la API
             />
           </div>
 
