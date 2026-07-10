@@ -308,10 +308,10 @@ const Navigation: React.FC = () => {
                       <span className="dropdown-app-text">Taurel Logistics</span>
                     </a>
                     <div className="dropdown-app-divider"></div>
-                    <button className="dropdown-app-item" onClick={() => {}}>
+                    <a href="/calculadora">
                       <span className="dropdown-app-icon">🧮</span>
                       <span className="dropdown-app-text">{t('nav.calculator')}</span>
-                    </button>
+                    </a>
                   </div>
                 </div>
               </li>
