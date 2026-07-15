@@ -20,7 +20,7 @@ export default function CalculadoraEnvio() {
     const consultarTarifas = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/tarifa');
+        const response = await fetch('https://logistics.taurel.com/api/tarifa');
         
         if (!response.ok) {
           throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
