@@ -161,7 +161,7 @@ export default function CalculadoraEnvio() {
           <hr />
 
           <div className="form-group">
-            <label htmlFor="localidad">Llocalidad de retiro:</label>
+            <label htmlFor="localidad">Localidad de retiro:</label>
             <select id="localidad" value={opcionSeleccionada} onChange={manejarCambio}>
               {/* 4. Renderizado dinámico usando .map() */}
               <option value="">-- Seleccione --</option>
