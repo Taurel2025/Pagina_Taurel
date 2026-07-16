@@ -8,12 +8,15 @@ export default function CalculadoraEnvio() {
     tarifaBase: 0,
     seguro: 0,
     aduana: 0,
-    transporteTerrestre: 0
+    transporteTerrestre: 0,
+    unidades: [] as any[]
   });
 
   // Estados para manejar la carga y posibles errores de la API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
 
   // Consultar las tarifas al cargar el componente
   useEffect(() => {
@@ -27,17 +30,26 @@ export default function CalculadoraEnvio() {
         }
         
         const data = await response.json();
-        const tarifa = data.datos.find((item: any) => item.Concepto == 85347);
-        console.log("Tarifa encontrada:", tarifa);
+        // const tarifa = data.datos.find((item: any) => item.Concepto == 85347);
+
+        const unidades = cleanJson(data.datos);
+
+        console.log(unidades);
+
+        // console.log("Tarifa encontrada:", tarifa);
         // Mapeamos los datos de la API al estado del formulario, manteniendo la cantidad en 1
         setForm((prev) => ({
           ...prev,
-          tarifaBase: Number(tarifa?.Monto) || 0,
+          tarifaBase: Number(data.Monto) || 0,
           seguro: Number(data.seguro) || 0,
           aduana: Number(data.aduana) || 0,
-          transporteTerrestre: Number(data.transporteTerrestre) || 0
+          transporteTerrestre: Number(data.transporteTerrestre) || 0,
+          unidades: unidades
         }));
         setError(null);
+
+        console.log('/////////// unidades', form.unidades)
+
       } catch (err) {
         console.error("Error cargando las tarifas de Taurel:", err);
         // setError("No se pudieron precargar las tarifas automáticas. Puedes ingresarlas manualmente.");
@@ -71,7 +83,8 @@ export default function CalculadoraEnvio() {
     const aduana = form.aduana > 0 ? form.aduana : 0;
     const terrestre = form.transporteTerrestre > 0 ? form.transporteTerrestre : 0;
 
-    return costoBaseTotal + seguro + aduana + terrestre;
+    // return costoBaseTotal + seguro + aduana + terrestre;
+    return costoBaseTotal;
   }, [costoBaseTotal, form.seguro, form.aduana, form.transporteTerrestre]);
 
   // Función auxiliar para dar formato de moneda
@@ -81,6 +94,58 @@ export default function CalculadoraEnvio() {
       currency: 'USD'
     }).format(valor || 0);
   };
+
+  const cleanJson = (data: any): any[] => {
+    const grouped = data.reduce((acc: any, item: any, index: number) => {
+      // Limpiamos los espacios en blanco de la Unidad de Negocio
+      const unidadId = item.UnidadNegocio.trim();
+
+      // Si es la primera vez que vemos esta unidad, inicializamos su estructura
+      if (!acc[unidadId]) {
+        acc[unidadId] = {
+          id: index,
+          Cia: item.Cia,
+          UnidadNegocio: unidadId,
+          DescripcionUnidNegocio: item.DescripcionUnidNegocio,
+          TarifaNaviera: item.TarifaNaviera,
+          FechaATA: item.FechaATA,
+          TipoFacturaNaviero: item.TipoFacturaNaviero,
+          Conceptos: [],
+          Total: 0
+        };
+      }
+
+      // Agregamos el concepto actual al arreglo de la unidad correspondiente
+      acc[unidadId].Conceptos.push({
+        Id: item.Concepto,
+        Descripcion: item.DescripcionConcepto,
+        Monto: item.Monto
+      });
+
+      // Sumamos el monto al total de la unidad
+      acc[unidadId].Total += item.Monto;
+
+      return acc;
+    }, {});
+
+    // Convertimos el objeto agrupado de vuelta a un Array
+    return Object.values(grouped);
+  };
+
+  const manejarCambio = (evento: any) => {
+    setOpcionSeleccionada(evento.target.value);
+
+    const unidad = form.unidades.find((un: any) => un.UnidadNegocio == evento.target.value);
+    console.log(unidad)
+
+    setForm((prev) => ({
+      ...prev,
+      tarifaBase: Number(unidad.Conceptos.find((x: any) => x.Id == 85347).Monto) || 0,
+      seguro: Number(unidad.Conceptos.find((x: any) => x.Id == 85348).Monto) || 0,
+      aduana: Number(unidad.Conceptos.find((x: any) => x.Id == 85414).Monto) || 0
+    }));
+  };
+
 
   return (
     
@@ -94,6 +159,20 @@ export default function CalculadoraEnvio() {
         <div className="card card-inputs">
           <h3>Datos del Envío</h3>
           <hr />
+
+          <div className="form-group">
+            <label htmlFor="localidad">Llocalidad de retiro:</label>
+            <select id="localidad" value={opcionSeleccionada} onChange={manejarCambio}>
+              {/* 4. Renderizado dinámico usando .map() */}
+              <option value="">-- Seleccione --</option>
+            
+              {form.unidades.map((unidad: any) => (
+                <option key={unidad.id} value={unidad.UnidadNegocio}>
+                  {unidad.DescripcionUnidNegocio}
+                </option>
+              ))}
+            </select>
+          </div>
           
           <div className="form-group">
             <label htmlFor="cantidad">Cantidad de Contenedores:</label>
@@ -174,24 +253,24 @@ export default function CalculadoraEnvio() {
           </div>
 
           <div className="result-row">
-            <span>Seguro:</span>
+            <span>Gestión Administrativa:</span>
             <span>{formatMoneda(form.seguro)}</span>
           </div>
 
           <div className="result-row">
-            <span>Aduana / Tasas:</span>
+            <span>Monitoreo y control Vial Oper.:</span>
             <span>{formatMoneda(form.aduana)}</span>
           </div>
 
-          <div className="result-row mb-2">
+          {/* <div className="result-row mb-2">
             <span>Flete Terrestre:</span>
             <span>{formatMoneda(form.transporteTerrestre)}</span>
-          </div>
+          </div> */}
 
           <hr />
 
           <div className="result-row total-row">
-            <span>Costo Total Estimado:</span>
+            <span>Costo Estimado:</span>
             <span className="total-price">{formatMoneda(costoTotal)}</span>
           </div>
         </div>
