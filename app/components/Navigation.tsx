@@ -356,6 +356,7 @@ const Navigation: React.FC = () => {
             <li><a href="/servicios" onClick={() => setIsMenuOpen(false)}>{t('nav.services')}</a></li>
             <li><a href="/sobre-nosotros" onClick={() => setIsMenuOpen(false)}>{t('nav.aboutUs')}</a></li>
             <li><a href="/contactanos" onClick={() => setIsMenuOpen(false)}>{t('nav.contact')}</a></li>
+            <li><a href="/empleo" onClick={() => setIsMenuOpen(false)}>{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace móvil a Empleo */}
             <li className="mobile-dropdown-item">
               <button
                 className="mobile-dropdown-trigger"
