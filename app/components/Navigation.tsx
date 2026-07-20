@@ -271,6 +271,7 @@ const Navigation: React.FC = () => {
               <li><a href="/servicios">{t('nav.services')}</a></li>
               <li><a href="/sobre-nosotros">{t('nav.aboutUs')}</a></li>
               <li><a href="/contactanos">{t('nav.contact')}</a></li>
+              <li><a href="/empleo">{t('nav.jobs')}</a></li> {/* ← NUEVO: enlace a Empleo */}
               <li className="nav-item-dropdown">
                 <button
                   className="dropdown-trigger"
