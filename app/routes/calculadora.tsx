@@ -1,67 +1,65 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import '../styles/calculadora.css'; // Si prefieres separar los estilos
+import '../styles/calculadora.css';
 
 export default function CalculadoraEnvio() {
-  // Estado para controlar los campos del formulario
   const [form, setForm] = useState({
     cantidad: 1,
     tarifaBase: 0,
-    seguro: 0,
-    aduana: 0,
-    transporteTerrestre: 0,
+    gestionAdmin: 0,
+    monitoreoVial: 0,
+    tasaBcv: 0,
+    porcentajeRetencionIva: 75,
     unidades: [] as any[]
   });
 
-  // Estados para manejar la carga y posibles errores de la API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
 
-  // Consultar las tarifas al cargar el componente
   useEffect(() => {
-    const consultarTarifas = async () => {
+    const consultarDatosIniciales = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://logistics.taurel.com/api/tarifa');
-        
-        if (!response.ok) {
-          throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+
+        // Consultamos en paralelo la API de tarifas de Taurel y la tasa oficial BCV de DolarAPI
+        const [responseTarifas, responseDolar] = await Promise.all([
+          fetch('https://logistics.taurel.com/api/tarifa'),
+          fetch('https://ve.dolarapi.com/v1/dolares/oficial')
+        ]);
+
+        if (!responseTarifas.ok) {
+          throw new Error(`Error en tarifas: ${responseTarifas.status}`);
         }
-        
-        const data = await response.json();
-        // const tarifa = data.datos.find((item: any) => item.Concepto == 85347);
 
-        const unidades = cleanJson(data.datos);
+        const dataTarifas = await responseTarifas.json();
+        const unidades = cleanJson(dataTarifas.datos);
 
-        console.log(unidades);
+        let tasaOficial = 0;
+        if (responseDolar.ok) {
+          const dataDolar = await responseDolar.json();
+          tasaOficial = Number(dataDolar.promedio) || 0;
+        }
 
-        // console.log("Tarifa encontrada:", tarifa);
-        // Mapeamos los datos de la API al estado del formulario, manteniendo la cantidad en 1
         setForm((prev) => ({
           ...prev,
-          tarifaBase: Number(data.Monto) || 0,
-          seguro: Number(data.seguro) || 0,
-          aduana: Number(data.aduana) || 0,
-          transporteTerrestre: Number(data.transporteTerrestre) || 0,
+          tarifaBase: Number(dataTarifas.Monto) || 0,
+          gestionAdmin: Number(dataTarifas.seguro) || 0,
+          monitoreoVial: Number(dataTarifas.aduana) || 0,
+          tasaBcv: tasaOficial > 0 ? tasaOficial : prev.tasaBcv,
           unidades: unidades
         }));
         setError(null);
-
-        console.log('/////////// unidades', form.unidades)
-
       } catch (err) {
-        console.error("Error cargando las tarifas de Taurel:", err);
-        // setError("No se pudieron precargar las tarifas automáticas. Puedes ingresarlas manualmente.");
+        console.error("Error cargando los datos iniciales:", err);
+        setError("No se pudieron cargar los datos automáticos.");
       } finally {
         setLoading(false);
       }
     };
 
-    consultarTarifas();
-  }, []); // Array vacío para que solo se ejecute una vez al montar el componente
+    consultarDatosIniciales();
+  }, []);
 
-  // Manejador genérico para actualizar los inputs numéricos
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -70,37 +68,75 @@ export default function CalculadoraEnvio() {
     }));
   };
 
-  // useMemo para calcular el costo base (Cantidad x Tarifa) sin recalcular en renders innecesarios
-  const costoBaseTotal = useMemo(() => {
+  const subtotalContenedores = useMemo(() => {
     const cantidad = form.cantidad > 0 ? form.cantidad : 0;
     const tarifa = form.tarifaBase > 0 ? form.tarifaBase : 0;
     return cantidad * tarifa;
   }, [form.cantidad, form.tarifaBase]);
 
-  // useMemo para calcular el Gran Total sumando los adicionales
-  const costoTotal = useMemo(() => {
-    const seguro = form.seguro > 0 ? form.seguro : 0;
-    const aduana = form.aduana > 0 ? form.aduana : 0;
-    const terrestre = form.transporteTerrestre > 0 ? form.transporteTerrestre : 0;
+  const gestionAdminTotal = useMemo(() => {
+    const cantidad = form.cantidad > 0 ? form.cantidad : 0;
+    return cantidad * (form.gestionAdmin || 0);
+  }, [form.cantidad, form.gestionAdmin]);
 
-    // return costoBaseTotal + seguro + aduana + terrestre;
-    return costoBaseTotal;
-  }, [costoBaseTotal, form.seguro, form.aduana, form.transporteTerrestre]);
+  const monitoreoVialTotal = useMemo(() => {
+    const cantidad = form.cantidad > 0 ? form.cantidad : 0;
+    return cantidad * (form.monitoreoVial || 0);
+  }, [form.cantidad, form.monitoreoVial]);
 
-  // Función auxiliar para dar formato de moneda
-  const formatMoneda = (valor: number) => {
+  const subtotalGeneralUSD = useMemo(() => {
+    return subtotalContenedores + gestionAdminTotal + monitoreoVialTotal;
+  }, [subtotalContenedores, gestionAdminTotal, monitoreoVialTotal]);
+
+  const vatUSD = useMemo(() => {
+    return subtotalGeneralUSD * 0.16;
+  }, [subtotalGeneralUSD]);
+
+  const totalConVatUSD = useMemo(() => {
+    return subtotalGeneralUSD + vatUSD;
+  }, [subtotalGeneralUSD, vatUSD]);
+
+  const retencionIslrUSD = useMemo(() => {
+    return subtotalGeneralUSD * 0.02;
+  }, [subtotalGeneralUSD]);
+
+  const retencionIvaUSD = useMemo(() => {
+    return vatUSD * (form.porcentajeRetencionIva / 100);
+  }, [vatUSD, form.porcentajeRetencionIva]);
+
+  const totalSinRetencionUSD = useMemo(() => {
+    return totalConVatUSD;
+  }, [totalConVatUSD]);
+
+  const totalSinRetencionVES = useMemo(() => {
+    return totalSinRetencionUSD * form.tasaBcv;
+  }, [totalSinRetencionUSD, form.tasaBcv]);
+
+  const totalConRetencionUSD = useMemo(() => {
+    return totalSinRetencionUSD - retencionIslrUSD - retencionIvaUSD;
+  }, [totalSinRetencionUSD, retencionIslrUSD, retencionIvaUSD]);
+
+  const totalConRetencionVES = useMemo(() => {
+    return totalConRetencionUSD * form.tasaBcv;
+  }, [totalConRetencionUSD, form.tasaBcv]);
+
+  const formatMonedaUSD = (valor: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     }).format(valor || 0);
   };
 
+  const formatMonedaVES = (valor: number) => {
+    return 'Bs. ' + new Intl.NumberFormat('es-VE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(valor || 0);
+  };
+
   const cleanJson = (data: any): any[] => {
     const grouped = data.reduce((acc: any, item: any, index: number) => {
-      // Limpiamos los espacios en blanco de la Unidad de Negocio
       const unidadId = item.UnidadNegocio.trim();
-
-      // Si es la primera vez que vemos esta unidad, inicializamos su estructura
       if (!acc[unidadId]) {
         acc[unidadId] = {
           id: index,
@@ -114,58 +150,66 @@ export default function CalculadoraEnvio() {
           Total: 0
         };
       }
-
-      // Agregamos el concepto actual al arreglo de la unidad correspondiente
       acc[unidadId].Conceptos.push({
         Id: item.Concepto,
         Descripcion: item.DescripcionConcepto,
         Monto: item.Monto
       });
-
-      // Sumamos el monto al total de la unidad
       acc[unidadId].Total += item.Monto;
-
       return acc;
     }, {});
-
-    // Convertimos el objeto agrupado de vuelta a un Array
     return Object.values(grouped);
   };
 
   const manejarCambio = (evento: any) => {
-    setOpcionSeleccionada(evento.target.value);
-
-    const unidad = form.unidades.find((un: any) => un.UnidadNegocio == evento.target.value);
-    console.log(unidad)
-
-    setForm((prev) => ({
-      ...prev,
-      tarifaBase: Number(unidad.Conceptos.find((x: any) => x.Id == 85347).Monto) || 0,
-      seguro: Number(unidad.Conceptos.find((x: any) => x.Id == 85348).Monto) || 0,
-      aduana: Number(unidad.Conceptos.find((x: any) => x.Id == 85414).Monto) || 0
-    }));
+    const val = evento.target.value;
+    setOpcionSeleccionada(val);
+    const unidad = form.unidades.find((un: any) => un.UnidadNegocio == val);
+    if (unidad) {
+      setForm((prev) => ({
+        ...prev,
+        tarifaBase: Number(unidad.Conceptos.find((x: any) => x.Id == 85347)?.Monto) || 0,
+        gestionAdmin: Number(unidad.Conceptos.find((x: any) => x.Id == 85348)?.Monto) || 0,
+        monitoreoVial: Number(unidad.Conceptos.find((x: any) => x.Id == 85414)?.Monto) || 0
+      }));
+    }
   };
 
-
   return (
-    
     <div className="calculator-container">
-        {loading && <p>Cargando tarifas automáticas...</p>}
       <h2>Calculadora de Envío de Contenedores</h2>
-      <p className="subtitle">Calcula de forma rápida el costo total de tu logística de exportación/importación.</p>
+      <p className="subtitle">Calcula de forma rápida el costo total de tu logística con desglose de retenciones y moneda local (VES).</p>
       
-      <div className="grid-layout">
-        {/* Panel de Entradas (Formulario) */}
-        <div className="card card-inputs">
+      {/* Grid optimizado con mayor espacio para resultados */}
+      <div className="grid-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '20px' }}>
+        
+        {/* Panel de Entradas */}
+        <div className="card card-inputs" style={{ position: 'relative' }}>
+          {loading && (
+            <div className="spinner-overlay" style={{
+              position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+              backgroundColor: 'rgba(255,255,255,0.85)', display: 'flex',
+              flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex: 10,
+              borderRadius: '8px'
+            }}>
+              <div className="spinner" style={{
+                width: '40px', height: '40px', border: '4px solid #f3f3f3',
+                borderTop: '4px solid #3498db', borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }}></div>
+              <p style={{ marginTop: '10px', fontWeight: '500', color: '#333' }}>Cargando tarifas y tasa BCV...</p>
+            </div>
+          )}
+
           <h3>Datos del Envío</h3>
           <hr />
 
+          {error && <p style={{ color: 'red', fontSize: '0.9rem' }}>{error}</p>}
+
           <div className="form-group">
             <label htmlFor="localidad">Localidad de retiro:</label>
-            <select id="localidad" value={opcionSeleccionada} onChange={manejarCambio}>
-              {/* 4. Renderizado dinámico usando .map() */}
+            <select id="localidad" value={opcionSeleccionada} onChange={manejarCambio} disabled={loading}>
               <option value="">-- Seleccione --</option>
-            
               {form.unidades.map((unidad: any) => (
                 <option key={unidad.id} value={unidad.UnidadNegocio}>
                   {unidad.DescripcionUnidNegocio}
@@ -183,7 +227,7 @@ export default function CalculadoraEnvio() {
               value={form.cantidad}
               onChange={handleChange}
               min="1" 
-              placeholder="Ej. 5"
+              placeholder="Ej. 1"
             />
           </div>
 
@@ -196,85 +240,104 @@ export default function CalculadoraEnvio() {
               value={form.tarifaBase}
               onChange={handleChange}
               min="0" 
-              placeholder="Ej. 1800"
-              readOnly={true}  // Hacemos que este campo sea de solo lectura ya que se obtiene de la API
-            />
-          </div>
-
-          {/* Costos Adicionales Opcionales */}
-          {/* <h3 className="section-title">Costos Adicionales (Opcional)</h3>
-          <hr />
-
-          <div className="form-group">
-            <label htmlFor="seguro">Seguro del Envío ($):</label>
-            <input 
-              id="seguro"
-              name="seguro"
-              type="number" 
-              value={form.seguro}
-              onChange={handleChange}
-              min="0"
+              readOnly={true}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="aduana">Gastos de Aduana / Aranceles ($):</label>
+            <label htmlFor="tasaBcv">Tasa $ BCV (Promedio):</label>
             <input 
-              id="aduana"
-              name="aduana"
+              id="tasaBcv"
+              name="tasaBcv"
               type="number" 
-              value={form.aduana}
+              step="0.0001"
+              value={form.tasaBcv}
               onChange={handleChange}
-              min="0"
+              min="0" 
+              readOnly={true}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="transporteTerrestre">Transporte Terrestre Posterior ($):</label>
+            <label htmlFor="porcentajeRetencionIva">Retención IVA (%):</label>
             <input 
-              id="transporteTerrestre"
-              name="transporteTerrestre"
+              id="porcentajeRetencionIva"
+              name="porcentajeRetencionIva"
               type="number" 
-              value={form.transporteTerrestre}
+              value={form.porcentajeRetencionIva}
               onChange={handleChange}
               min="0"
+              max="100"
+              readOnly={true}
             />
-          </div> */}
+          </div>
         </div>
 
-        {/* Panel de Resultados */}
+        {/* Panel de Resultados (Ampliado) */}
         <div className="card card-results">
           <h3>Resumen de Costos</h3>
           <hr />
 
           <div className="result-row">
-            <span>Subtotal Contenedores ({form.cantidad || 0} x {formatMoneda(form.tarifaBase)}):</span>
-            <strong>{formatMoneda(costoBaseTotal)}</strong>
+            <span>Manejo Contenedores ({form.cantidad || 0} x {formatMonedaUSD(form.tarifaBase)}):</span>
+            <strong>{formatMonedaUSD(subtotalContenedores)}</strong>
           </div>
 
           <div className="result-row">
             <span>Gestión Administrativa:</span>
-            <span>{formatMoneda(form.seguro)}</span>
+            <span>{formatMonedaUSD(gestionAdminTotal)}</span>
           </div>
 
           <div className="result-row">
-            <span>Monitoreo y control Vial Oper.:</span>
-            <span>{formatMoneda(form.aduana)}</span>
+            <span>Monitoreo y Control Vial:</span>
+            <span>{formatMonedaUSD(monitoreoVialTotal)}</span>
           </div>
 
-          {/* <div className="result-row mb-2">
-            <span>Flete Terrestre:</span>
-            <span>{formatMoneda(form.transporteTerrestre)}</span>
-          </div> */}
+          <div className="result-row">
+            <span>IVA (16%):</span>
+            <span>{formatMonedaUSD(vatUSD)}</span>
+          </div>
+
+          <hr style={{margin: '10px 0', borderColor: '#eee'}} />
+
+          <div className="result-row text-muted">
+            <span>Retención ISLR (2%):</span>
+            <span style={{color: '#d9534f'}}>- {formatMonedaUSD(retencionIslrUSD)}</span>
+          </div>
+
+          <div className="result-row text-muted">
+            <span>Retención IVA ({form.porcentajeRetencionIva}%):</span>
+            <span style={{color: '#d9534f'}}>- {formatMonedaUSD(retencionIvaUSD)}</span>
+          </div>
 
           <hr />
 
+          <div className="result-row">
+            <span>Total USD (Sin Retención):</span>
+            <span>{formatMonedaUSD(totalSinRetencionUSD)}</span>
+          </div>
+          <div className="result-row">
+            <span>Total VES (Sin Retención):</span>
+            <span>{formatMonedaVES(totalSinRetencionVES)}</span>
+          </div>
+
+          <div className="result-row total-row" style={{marginTop: '10px'}}>
+            <span>Total a Pagar USD (Con Retención):</span>
+            <span className="total-price">{formatMonedaUSD(totalConRetencionUSD)}</span>
+          </div>
           <div className="result-row total-row">
-            <span>Costo Estimado:</span>
-            <span className="total-price">{formatMoneda(costoTotal)}</span>
+            <span>Total a Pagar VES (Con Retención):</span>
+            <span className="total-price">{formatMonedaVES(totalConRetencionVES)}</span>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
