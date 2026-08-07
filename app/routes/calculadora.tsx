@@ -259,17 +259,31 @@ export default function CalculadoraEnvio() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="porcentajeRetencionIva">Retención IVA (%):</label>
-            <input 
-              id="porcentajeRetencionIva"
-              name="porcentajeRetencionIva"
-              type="number" 
-              value={form.porcentajeRetencionIva}
-              onChange={handleChange}
-              min="0"
-              max="100"
-              readOnly={true}
-            />
+            <label>Retención IVA (%):</label>
+            <div style={{ display: 'flex', gap: '20px', marginTop: '8px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontWeight: 'normal' }}>
+                <input 
+                  type="radio"
+                  name="porcentajeRetencionIva"
+                  value={75}
+                  checked={form.porcentajeRetencionIva === 75}
+                  onChange={handleChange}
+                  style={{ marginRight: '6px' }}
+                />
+                75%
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontWeight: 'normal' }}>
+                <input 
+                  type="radio"
+                  name="porcentajeRetencionIva"
+                  value={100}
+                  checked={form.porcentajeRetencionIva === 100}
+                  onChange={handleChange}
+                  style={{ marginRight: '6px' }}
+                />
+                100%
+              </label>
+            </div>
           </div>
         </div>
 
@@ -279,7 +293,7 @@ export default function CalculadoraEnvio() {
           <hr />
 
           <div className="result-row">
-            <span>Manejo Contenedores ({form.cantidad || 0} x {formatMonedaUSD(form.tarifaBase)}):</span>
+            <span>Manejo Contenedores:</span>
             <strong>{formatMonedaUSD(subtotalContenedores)}</strong>
           </div>
 
@@ -312,14 +326,16 @@ export default function CalculadoraEnvio() {
 
           <hr />
 
-          <div className="result-row">
+          <div className="result-row total-row">
             <span>Total USD (Sin Retención):</span>
-            <span>{formatMonedaUSD(totalSinRetencionUSD)}</span>
+            <span className="total-price">{formatMonedaUSD(totalSinRetencionUSD)}</span>
           </div>
-          <div className="result-row">
+          <div className="result-row total-row">
             <span>Total VES (Sin Retención):</span>
-            <span>{formatMonedaVES(totalSinRetencionVES)}</span>
+            <span className="total-price">{formatMonedaVES(totalSinRetencionVES)}</span>
           </div>
+
+          <hr />
 
           <div className="result-row total-row" style={{marginTop: '10px'}}>
             <span>Total a Pagar USD (Con Retención):</span>
