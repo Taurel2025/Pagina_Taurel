@@ -37,7 +37,7 @@ export default function CalculadoraEnvio() {
         let tasaOficial = 0;
         if (responseDolar.ok) {
           const dataDolar = await responseDolar.json();
-          tasaOficial = Number(dataDolar.promedio) || 0;
+          tasaOficial = Number(dataDolar.promedio.toFixed(3)) || 0;
         }
 
         setForm((prev) => ({
@@ -251,7 +251,7 @@ export default function CalculadoraEnvio() {
               name="tasaBcv"
               type="number" 
               step="0.0001"
-              value={form.tasaBcv}
+              value={form.tasaBcv.toFixed(3)}
               onChange={handleChange}
               min="0" 
               readOnly={true}
